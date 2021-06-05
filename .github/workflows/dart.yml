@@ -25,3 +25,4 @@ jobs:
         channel: 'stable' # or: 'beta', 'dev' or 'master'
     - run: flutter pub get
     - run: flutter build apk
+    - run: flutter build web
