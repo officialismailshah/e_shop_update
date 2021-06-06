@@ -4,9 +4,10 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final IconData data;
   final String hintText;
-  // bool isObsecure = true;
+  final bool isObsecure;
 
-  CustomTextField({Key key, this.controller, this.data, this.hintText})
+  CustomTextField(
+      {Key key, this.controller, this.data, this.hintText, this.isObsecure})
       : super(key: key);
 
   @override
@@ -20,7 +21,7 @@ class CustomTextField extends StatelessWidget {
       margin: EdgeInsets.all(10.0),
       child: TextFormField(
         controller: controller,
-        obscureText: true,
+        obscureText: isObsecure,
         cursorColor: Theme.of(context).primaryColor,
         decoration: InputDecoration(
           border: InputBorder.none,

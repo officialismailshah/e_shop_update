@@ -26,7 +26,7 @@ class _RegisterState extends State<Register> {
       TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String userImageUrl = "";
-  final imageFile = ImagePicker();
+  final ImagePicker imageFile = ImagePicker();
   File imgFile;
 
   @override
@@ -46,8 +46,7 @@ class _RegisterState extends State<Register> {
               child: CircleAvatar(
                 radius: _screenWidth * 0.15,
                 backgroundColor: Colors.white,
-                backgroundImage:
-                    imageFile == null ? null : NetworkImage(imgFile.path),
+                backgroundImage: imgFile == null ? null : FileImage(imgFile),
                 child: imageFile == null
                     ? Icon(
                         Icons.add_photo_alternate,
@@ -68,25 +67,25 @@ class _RegisterState extends State<Register> {
                     controller: _nameTextEditingController,
                     data: Icons.person,
                     hintText: "Name",
-                    // isObsecure: false,
+                    isObsecure: false,
                   ),
                   CustomTextField(
                     controller: _emailTextEditingController,
                     data: Icons.email,
                     hintText: "Email",
-                    // isObsecure: false,
+                    isObsecure: false,
                   ),
                   CustomTextField(
                     controller: _passwordTextEditingController,
                     data: Icons.person,
                     hintText: "Password",
-                    // isObsecure: true,
+                    isObsecure: true,
                   ),
                   CustomTextField(
                     controller: _cPasswordTextEditingController,
                     data: Icons.person,
                     hintText: "Confirm Password",
-                    // isObsecure: true,
+                    isObsecure: true,
                   ),
                 ],
               ),
@@ -127,7 +126,7 @@ class _RegisterState extends State<Register> {
   }
 
   Future<void> uploadAndSaveImage() async {
-    if (imageFile == null) {
+    if (imgFile == null) {
       showDialog(
           context: context,
           builder: (c) {
