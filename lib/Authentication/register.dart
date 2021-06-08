@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'dart:async';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/Widgets/customTextField.dart';
 import 'package:e_shop/DialogBox/errorDialog.dart';
@@ -28,6 +30,7 @@ class _RegisterState extends State<Register> {
   String userImageUrl = "";
   final ImagePicker imageFile = ImagePicker();
   File imgFile;
+  Image imgForWeb;
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +45,18 @@ class _RegisterState extends State<Register> {
               height: 10.0,
             ),
             InkWell(
-              onTap: _selectAndPickImage,
+              onTap:
+                  // kIsWeb ? _selectAndPickImageForWeb :
+                  _selectAndPickImage,
               child: CircleAvatar(
                 radius: _screenWidth * 0.15,
                 backgroundColor: Colors.white,
-                backgroundImage: imgFile == null ? null : FileImage(imgFile),
-                child: imageFile == null
+                backgroundImage: imgFile == null
+                    ? null
+                    : kIsWeb
+                        ? Image.network(imgFile.path)
+                        : FileImage(imgFile),
+                child: imgFile == null
                     ? Icon(
                         Icons.add_photo_alternate,
                         size: _screenWidth * 0.15,
@@ -124,6 +133,18 @@ class _RegisterState extends State<Register> {
       imgFile = File(file.path);
     });
   }
+
+  // Future<void> _selectAndPickImageForWeb() async {
+  //   Image file = await ImagePickerWeb.getImage(outputType: ImageType.widget);
+
+  //   if (file != null) {
+  //     setState(() {
+  //       // file.clear();
+  //       // _pickedImages.add(fromPicker);
+  //       imgForWeb = file;
+  //     });
+  //   }
+  // }
 
   Future<void> uploadAndSaveImage() async {
     if (imgFile == null) {
