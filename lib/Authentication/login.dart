@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/Admin/adminLogin.dart';
+import 'package:e_shop/Admin/stockMannagerLogIn.dart';
 import 'package:e_shop/Widgets/customTextField.dart';
 import 'package:e_shop/DialogBox/errorDialog.dart';
 import 'package:e_shop/DialogBox/loadingDialog.dart';
@@ -84,7 +85,7 @@ class _LoginState extends State<Login> {
               ),
             ),
             SizedBox(
-              height: 50.0,
+              height: 30.0,
             ),
             Container(
               height: 4.0,
@@ -94,18 +95,41 @@ class _LoginState extends State<Login> {
             SizedBox(
               height: 10.0,
             ),
-            // ignore: deprecated_member_use
-            FlatButton.icon(
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AdminSignInPage())),
-              icon: (Icon(
-                Icons.nature_people,
-                color: Colors.red,
-              )),
-              label: Text(
-                "i'm Admin",
-                style:
-                    TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+            Padding(
+              padding: const EdgeInsets.all(0.0),
+              // ignore: deprecated_member_use
+              child: FlatButton.icon(
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => AdminSignInPage())),
+                icon: (Icon(
+                  Icons.nature_people,
+                  color: Colors.red,
+                )),
+                label: Text(
+                  "i'm Admin",
+                  style:
+                      TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(0.0),
+              // ignore: deprecated_member_use
+              child: FlatButton.icon(
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => StockManagerSignInPage())),
+                icon: (Icon(
+                  Icons.inventory,
+                  color: Colors.red,
+                )),
+                label: Text(
+                  "i'm Stock Manager",
+                  style:
+                      TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],

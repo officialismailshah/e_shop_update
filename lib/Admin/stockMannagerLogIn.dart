@@ -5,7 +5,7 @@ import 'package:e_shop/Widgets/customTextField.dart';
 import 'package:e_shop/DialogBox/errorDialog.dart';
 import 'package:flutter/material.dart';
 
-class AdminSignInPage extends StatelessWidget {
+class StockManagerSignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,17 +28,17 @@ class AdminSignInPage extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: AdminSignInScreen(),
+      body: StockManagerSignInScreen(),
     );
   }
 }
 
-class AdminSignInScreen extends StatefulWidget {
+class StockManagerSignInScreen extends StatefulWidget {
   @override
   _AdminSignInScreenState createState() => _AdminSignInScreenState();
 }
 
-class _AdminSignInScreenState extends State<AdminSignInScreen> {
+class _AdminSignInScreenState extends State<StockManagerSignInScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _adminIDTextEditingController =
       TextEditingController();
@@ -75,7 +75,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                "Admin",
+                "Stock Manager",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 28.0,
@@ -144,7 +144,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
                 color: Colors.red,
               )),
               label: Text(
-                "i'm not Admin",
+                "i'm not Stock Manager",
                 style:
                     TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
               ),
@@ -159,7 +159,10 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
   }
 
   loginAdmin() {
-    Firestore.instance.collection("admins").getDocuments().then((snapshot) {
+    Firestore.instance
+        .collection("stockmanager")
+        .getDocuments()
+        .then((snapshot) {
       snapshot.documents.forEach((result) {
         if (result.data["id"] != _adminIDTextEditingController.text.trim()) {
           // ignore: deprecated_member_use
@@ -176,7 +179,8 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
           // ignore: deprecated_member_use
           Scaffold.of(context).showSnackBar(
             SnackBar(
-              content: Text("Welcome dear Admin." + result.data["name"]),
+              content:
+                  Text("Welcome dear Stock Manager." + result.data["name"]),
             ),
           );
 

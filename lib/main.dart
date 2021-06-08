@@ -12,8 +12,7 @@ import 'Counters/changeAddresss.dart';
 import 'Counters/totalMoney.dart';
 import 'Store/storehome.dart';
 
-Future<void> main() async
-{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   EcommerceApp.auth = FirebaseAuth.instance;
@@ -39,8 +38,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primaryColor: Colors.green,
           ),
-          home: SplashScreen()
-      ),
+          home: SplashScreen()),
     );
   }
 }
@@ -50,28 +48,20 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-
-class _SplashScreenState extends State<SplashScreen>
-{
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-
     super.initState();
 
     displaySplash();
   }
 
-  displaySplash()
-  {
-
+  displaySplash() {
     Timer(Duration(seconds: 5), () async {
-      if(await EcommerceApp.auth.currentUser() != null)
-      {
+      if (await EcommerceApp.auth.currentUser() != null) {
         Route route = MaterialPageRoute(builder: (_) => StoreHome());
         Navigator.pushReplacement(context, route);
-      }
-      else
-      {
+      } else {
         Route route = MaterialPageRoute(builder: (_) => AuthenticScreen());
         Navigator.pushReplacement(context, route);
       }
@@ -83,22 +73,25 @@ class _SplashScreenState extends State<SplashScreen>
     return Material(
       child: Container(
         decoration: new BoxDecoration(
-        gradient: new LinearGradient(
-        colors: [Colors.redAccent, Colors.blueAccent],
-        begin: const FractionalOffset(0.0, 0.0),
-        end: const FractionalOffset(1.0, 0.0),
-        stops: [0.0, 1.0],
-        tileMode: TileMode.clamp,
+          gradient: new LinearGradient(
+            colors: [Colors.redAccent, Colors.blueAccent],
+            begin: const FractionalOffset(0.0, 0.0),
+            end: const FractionalOffset(1.0, 0.0),
+            stops: [0.0, 1.0],
+            tileMode: TileMode.clamp,
+          ),
         ),
-      ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset("images/welcome.png"),
-              SizedBox(height: 20,),
-              Text("Best Platform For Online Shopping",
-              style: TextStyle(color: Colors.white) ,
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                "Best Platform For Online Shopping",
+                style: TextStyle(color: Colors.white),
               ),
             ],
           ),
