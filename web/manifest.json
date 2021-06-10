@@ -1,6 +1,6 @@
 {
-    "name": "e_shop_update",
-    "short_name": "e_shop_update",
+    "name": "e_shop",
+    "short_name": "e_shop",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

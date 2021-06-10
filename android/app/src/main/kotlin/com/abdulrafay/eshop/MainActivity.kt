@@ -1,4 +1,4 @@
-package com.muhammadali.e_shop.e_shop_update
+package com.abdulrafay.eshop
 
 import io.flutter.embedding.android.FlutterActivity
 
