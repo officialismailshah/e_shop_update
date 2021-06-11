@@ -11,7 +11,7 @@ import 'Counters/cartitemcounter.dart';
 import 'Counters/changeAddresss.dart';
 import 'Counters/totalMoney.dart';
 import 'Store/storehome.dart';
-import 'package:change_app_package_name/change_app_package_name.dart';
+// import 'package:change_app_package_name/change_app_package_name.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
