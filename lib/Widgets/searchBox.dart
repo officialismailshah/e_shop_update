@@ -3,17 +3,12 @@ import 'package:flutter/material.dart';
 
 import '../Store/Search.dart';
 
-
 class SearchBoxDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
-      BuildContext context,
-      double shrinkOffset,
-      bool overlapsContent
-      ) =>
+          BuildContext context, double shrinkOffset, bool overlapsContent) =>
       InkWell(
-        onTap: ()
-        {
+        onTap: () {
           Route route = MaterialPageRoute(builder: (c) => SearchProduct());
           Navigator.pushReplacement(context, route);
         },
@@ -59,8 +54,6 @@ class SearchBoxDelegate extends SliverPersistentHeaderDelegate {
         ),
       );
 
-
-
   @override
   double get maxExtent => 80;
 
@@ -70,5 +63,3 @@ class SearchBoxDelegate extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
 }
-
-
