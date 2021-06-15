@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/Admin/adminLogin.dart';
-import 'package:e_shop/Admin/stockMannagerLogIn.dart';
+// import 'package:e_shop/Admin/stockMannagerLogIn.dart';
 import 'package:e_shop/Widgets/customTextField.dart';
 import 'package:e_shop/DialogBox/errorDialog.dart';
 import 'package:e_shop/DialogBox/loadingDialog.dart';
@@ -113,25 +113,25 @@ class _LoginState extends State<Login> {
               ),
             ),
 
-            Padding(
-              padding: const EdgeInsets.all(0.0),
+            // Padding(
+            //   padding: const EdgeInsets.all(0.0),
               // ignore: deprecated_member_use
-              child: FlatButton.icon(
-                onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => StockManagerSignInPage())),
-                icon: (Icon(
-                  Icons.inventory,
-                  color: Colors.red,
-                )),
-                label: Text(
-                  "i'm Stock Manager",
-                  style:
-                      TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
+            //   child: FlatButton.icon(
+            //     onPressed: () => Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //             builder: (context) => StockManagerSignInPage())),
+            //     icon: (Icon(
+            //       Icons.inventory,
+            //       color: Colors.red,
+            //     )),
+            //     label: Text(
+            //       "i'm Stock Manager",
+            //       style:
+            //           TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
