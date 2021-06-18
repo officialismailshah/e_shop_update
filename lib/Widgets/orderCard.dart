@@ -4,27 +4,26 @@ import 'package:e_shop/Models/item.dart';
 import 'package:flutter/material.dart';
 import '../Store/storehome.dart';
 
-int counter =0;
+int counter = 0;
 
-class OrderCard extends StatelessWidget
-{
+class OrderCard extends StatelessWidget {
   final int itemCount;
   final List<DocumentSnapshot> data;
   final String orderID;
 
-  OrderCard({Key key, this.itemCount, this.data, this.orderID}) : super(key: key);
+  OrderCard({Key key, this.itemCount, this.data, this.orderID})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return  InkWell(
-      onTap: ()
-      {
+    return InkWell(
+      onTap: () {
         Route route;
-        if(counter == 0)
-          {
-            counter = counter + 1;
-            route = MaterialPageRoute(builder: (c) => OrderDetails(orderID: orderID));
-          }
+        if (counter == 0) {
+          counter = counter + 1;
+          route =
+              MaterialPageRoute(builder: (c) => OrderDetails(orderID: orderID));
+        }
         Navigator.push(context, route);
       },
       child: Container(
@@ -43,8 +42,7 @@ class OrderCard extends StatelessWidget
         child: ListView.builder(
           itemCount: itemCount,
           physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (c, index)
-          {
+          itemBuilder: (c, index) {
             ItemModel model = ItemModel.fromJson(data[index].data);
             return sourceOrderInfo(model, context);
           },
@@ -54,48 +52,62 @@ class OrderCard extends StatelessWidget
   }
 }
 
-
-
 Widget sourceOrderInfo(ItemModel model, BuildContext context,
-    {Color background})
-{
-  width =  MediaQuery.of(context).size.width;
+    {Color background}) {
+  width = MediaQuery.of(context).size.width;
 
-  return  Container(
+  return Container(
     color: Colors.grey[100],
     height: 170.0,
     width: width,
     child: Row(
       children: [
-        Image.network(model.thumbnailUrl, width: 180.0,),
-        SizedBox(width: 10.0,),
+        Image.network(
+          model.thumbnailUrl,
+          width: 180.0,
+        ),
+        SizedBox(
+          width: 10.0,
+        ),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 15.0,),
+              SizedBox(
+                height: 15.0,
+              ),
               Container(
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
-                      child: Text(model.title, style: TextStyle(color: Colors.black, fontSize: 14.0),),
+                      child: Text(
+                        model.title,
+                        style: TextStyle(color: Colors.black, fontSize: 14.0),
+                      ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 5.0,),
+              SizedBox(
+                height: 5.0,
+              ),
               Container(
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Expanded(
-                      child: Text(model.shortInfo, style: TextStyle(color: Colors.black54, fontSize: 12.0),),
+                      child: Text(
+                        model.shortInfo,
+                        style: TextStyle(color: Colors.black54, fontSize: 12.0),
+                      ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 20.0,),
+              SizedBox(
+                height: 20.0,
+              ),
               Row(
                 children: [
                   Column(
@@ -104,9 +116,10 @@ Widget sourceOrderInfo(ItemModel model, BuildContext context,
                       Padding(
                         padding: EdgeInsets.only(top: 5.0),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              r"Total Price: ",
+                              "Total Price:",
                               style: TextStyle(
                                 fontSize: 14.0,
                                 color: Colors.grey,
@@ -114,7 +127,8 @@ Widget sourceOrderInfo(ItemModel model, BuildContext context,
                             ),
                             Text(
                               "Rs ",
-                              style: TextStyle( color: Colors.red, fontSize: 16.0),
+                              style:
+                                  TextStyle(color: Colors.red, fontSize: 16.0),
                             ),
                             Text(
                               (model.price).toString(),
@@ -133,7 +147,6 @@ Widget sourceOrderInfo(ItemModel model, BuildContext context,
               Flexible(
                 child: Container(),
               ),
-
               Divider(
                 height: 5.0,
                 color: Colors.red,
