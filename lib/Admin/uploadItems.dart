@@ -28,6 +28,31 @@ class _UploadPageState extends State<UploadPage>
   String productId = DateTime.now().millisecondsSinceEpoch.toString();
   bool uploading = false;
 
+  Future<bool> backToHome() async {
+    final shouldPop = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Are you sure?'),
+        content: Text('Do you want to logout?'),
+        actions: <Widget>[
+          // ignore: deprecated_member_use
+          FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text('No'),
+          ),
+          // ignore: deprecated_member_use
+          FlatButton(
+            onPressed: () => Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => SplashScreen())),
+            child: Text('Yes'),
+          ),
+        ],
+      ),
+    );
+
+    return shouldPop ?? true;
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -37,48 +62,52 @@ class _UploadPageState extends State<UploadPage>
   }
 
   displayAdminHomeScreen() {
-    return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: new BoxDecoration(
-            gradient: new LinearGradient(
-              colors: [Colors.redAccent, Colors.blueAccent],
-              begin: const FractionalOffset(0.0, 0.0),
-              end: const FractionalOffset(1.0, 0.0),
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp,
-            ),
-          ),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.border_color,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Route route = MaterialPageRoute(builder: (c) => AdminShiftOrders());
-            Navigator.pushReplacement(context, route);
-          },
-        ),
-        actions: [
-          // ignore: deprecated_member_use
-          FlatButton(
-            child: Text(
-              "Logout",
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
+    return WillPopScope(
+      onWillPop: backToHome,
+      child: Scaffold(
+        appBar: AppBar(
+          flexibleSpace: Container(
+            decoration: new BoxDecoration(
+              gradient: new LinearGradient(
+                colors: [Colors.redAccent, Colors.blueAccent],
+                begin: const FractionalOffset(0.0, 0.0),
+                end: const FractionalOffset(1.0, 0.0),
+                stops: [0.0, 1.0],
+                tileMode: TileMode.clamp,
               ),
             ),
+          ),
+          leading: IconButton(
+            icon: Icon(
+              Icons.add_shopping_cart,
+              color: Colors.white,
+            ),
             onPressed: () {
-              Route route = MaterialPageRoute(builder: (c) => SplashScreen());
+              Route route =
+                  MaterialPageRoute(builder: (c) => AdminShiftOrders());
               Navigator.pushReplacement(context, route);
             },
           ),
-        ],
+          actions: [
+            // ignore: deprecated_member_use
+            FlatButton(
+              child: Text(
+                "Logout",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              onPressed: () {
+                Route route = MaterialPageRoute(builder: (c) => SplashScreen());
+                Navigator.pushReplacement(context, route);
+              },
+            ),
+          ],
+        ),
+        body: getAdminHomeScreenBody(),
       ),
-      body: getAdminHomeScreenBody(),
     );
   }
 
