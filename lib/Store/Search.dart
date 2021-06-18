@@ -5,49 +5,50 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../Widgets/customAppBar.dart';
 
-
-
-
-
 class SearchProduct extends StatefulWidget {
   @override
   _SearchProductState createState() => new _SearchProductState();
 }
 
-
-
-class _SearchProductState extends State<SearchProduct>
-{
+class _SearchProductState extends State<SearchProduct> {
   Future<QuerySnapshot> docList;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        appBar: MyAppBar(bottom: PreferredSize(child: searchWidget(), preferredSize: Size(56.0, 56.0)),),
-        body: FutureBuilder<QuerySnapshot>(
-          future: docList,
-          builder: (context, snap)
-          {
-            return snap.hasData
-                ? ListView.builder(
-                   itemCount: snap.data.documents.length,
-                   itemBuilder: (context, index)
-                   {
-                     ItemModel model = ItemModel.fromJson(snap.data.documents[index].data);
+      child: WillPopScope(
+        onWillPop: () async {
+          Route route = MaterialPageRoute(builder: (context) => StoreHome());
+          Navigator.push(context, route);
+          return true;
+        },
+        child: Scaffold(
+          appBar: MyAppBar(
+            bottom: PreferredSize(
+                child: searchWidget(), preferredSize: Size(56.0, 56.0)),
+          ),
+          body: FutureBuilder<QuerySnapshot>(
+            future: docList,
+            builder: (context, snap) {
+              return snap.hasData
+                  ? ListView.builder(
+                      itemCount: snap.data.documents.length,
+                      itemBuilder: (context, index) {
+                        ItemModel model =
+                            ItemModel.fromJson(snap.data.documents[index].data);
 
-                     return sourceInfo(model, context);
-                   },
-                   )
-                : Text("No data available");
-          },
+                        return sourceInfo(model, context);
+                      },
+                    )
+                  : Text("No data available");
+            },
+          ),
         ),
       ),
     );
   }
 
-  Widget searchWidget()
-  {
+  Widget searchWidget() {
     return Container(
       alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
@@ -72,17 +73,20 @@ class _SearchProductState extends State<SearchProduct>
           children: [
             Padding(
               padding: EdgeInsets.only(left: 8.0),
-              child: Icon(Icons.search, color: Colors.blueGrey,),
+              child: Icon(
+                Icons.search,
+                color: Colors.blueGrey,
+              ),
             ),
             Flexible(
               child: Padding(
                 padding: EdgeInsets.only(left: 8.0),
                 child: TextField(
-                  onChanged: (value)
-                  {
+                  onChanged: (value) {
                     startSearching(value);
                   },
-                  decoration: InputDecoration.collapsed(hintText: "Search here..."),
+                  decoration:
+                      InputDecoration.collapsed(hintText: "Search here..."),
                 ),
               ),
             ),
@@ -92,11 +96,10 @@ class _SearchProductState extends State<SearchProduct>
     );
   }
 
-  Future startSearching(String query) async
-  {
-    docList = Firestore.instance.collection("items")
+  Future startSearching(String query) async {
+    docList = Firestore.instance
+        .collection("items")
         .where("shortInfo", isGreaterThanOrEqualTo: query)
         .getDocuments();
-
   }
 }

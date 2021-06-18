@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_shop/Category/women.dart';
 import 'package:e_shop/Store/cart.dart';
 import 'package:e_shop/Store/product_page.dart';
 import 'package:e_shop/Counters/cartitemcounter.dart';
@@ -123,7 +124,9 @@ class _StoreHomeState extends State<StoreHome> {
                       ),
                       InkWell(
                         onTap: () {
-                          print('checking women btn');
+                          Route route = MaterialPageRoute(
+                              builder: (context) => WomenCategory());
+                          Navigator.push(context, route);
                         },
                         child: Chip(
                           backgroundColor: Colors.blue[600],

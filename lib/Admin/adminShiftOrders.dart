@@ -49,17 +49,6 @@ class _MyOrdersState extends State<AdminShiftOrders> {
                 Navigator.push(context, route);
               },
             ),
-            // actions: [
-            //   IconButton(
-            //     icon: Icon(
-            //       Icons.arrow_drop_down_circle,
-            //       color: Colors.white,
-            //     ),
-            //     onPressed: () {
-            //       SystemNavigator.pop();
-            //     },
-            //   ),
-            // ],
           ),
           body: StreamBuilder<QuerySnapshot>(
             stream: Firestore.instance.collection("orders").snapshots(),
