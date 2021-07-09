@@ -109,7 +109,14 @@ class _StoreHomeState extends State<StoreHome> {
                       ),
                       InkWell(
                         onTap: () {
-                          print('checking');
+                          Fluttertoast.showToast(
+                            msg: "Men Category Is Coming Soon",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity
+                                .BOTTOM, // also possible "TOP" and "CENTER"
+                            backgroundColor: Colors.red[900],
+                            textColor: Colors.white,
+                          );
                         },
                         child: Chip(
                           backgroundColor: Colors.blue[600],
@@ -254,7 +261,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "50%",
+                                "20%",
                                 style: TextStyle(
                                     fontSize: 15.0,
                                     color: Colors.white,

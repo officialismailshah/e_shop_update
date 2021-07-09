@@ -204,7 +204,7 @@ class _UploadPageState extends State<UploadPage>
   }
 
   pickPhotoFromGallery() async {
-    // Navigator.pop(context);
+    Navigator.pop(context);
     final imageFile = await ImagePicker().getImage(
       source: ImageSource.gallery,
     );
@@ -215,152 +215,160 @@ class _UploadPageState extends State<UploadPage>
   }
 
   displayAdminUploadFormScreen() {
-    return Scaffold(
-      appBar: AppBar(
-        flexibleSpace: Container(
-          decoration: new BoxDecoration(
-            gradient: new LinearGradient(
-              colors: [Colors.redAccent, Colors.blueAccent],
-              begin: const FractionalOffset(0.0, 0.0),
-              end: const FractionalOffset(1.0, 0.0),
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp,
+    return WillPopScope(
+      onWillPop: () async {
+        Route route = MaterialPageRoute(builder: (context) => UploadPage());
+        Navigator.push(context, route);
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          flexibleSpace: Container(
+            decoration: new BoxDecoration(
+              gradient: new LinearGradient(
+                colors: [Colors.redAccent, Colors.blueAccent],
+                begin: const FractionalOffset(0.0, 0.0),
+                end: const FractionalOffset(1.0, 0.0),
+                stops: [0.0, 1.0],
+                tileMode: TileMode.clamp,
+              ),
             ),
           ),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
+          leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: clearFormInfo,
           ),
-          onPressed: clearFormInfo,
-        ),
-        title: Text(
-          "New Product",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 24.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          // ignore: deprecated_member_use
-          FlatButton(
-            onPressed: uploading ? null : () => uploadImageAndSaveItemInfo(),
-            child: Text(
-              "Add",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold),
+          title: Text(
+            "New Product",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
             ),
           ),
-        ],
-      ),
-      body: ListView(
-        children: [
-          uploading ? circularProgress() : Text(""),
-          Container(
-            height: 230.0,
-            width: MediaQuery.of(context).size.width * 0.8,
-            child: Center(
-              child: AspectRatio(
-                aspectRatio: 16 / 9,
-                child: Container(
-                  decoration: BoxDecoration(
+          actions: [
+            // ignore: deprecated_member_use
+            FlatButton(
+              onPressed: uploading ? null : () => uploadImageAndSaveItemInfo(),
+              child: Text(
+                "Add",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+        body: ListView(
+          children: [
+            uploading ? circularProgress() : Text(""),
+            Container(
+              height: 230.0,
+              width: MediaQuery.of(context).size.width * 0.8,
+              child: Center(
+                child: AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Container(
+                    decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: FileImage(file), fit: BoxFit.cover)),
+                          image: FileImage(file), fit: BoxFit.cover),
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(padding: EdgeInsets.only(top: 12.0)),
-          ListTile(
-            leading: Icon(
-              Icons.perm_device_information,
+            Padding(padding: EdgeInsets.only(top: 12.0)),
+            ListTile(
+              leading: Icon(
+                Icons.perm_device_information,
+                color: Colors.red,
+              ),
+              title: Container(
+                width: 250.0,
+                child: TextField(
+                  style: TextStyle(color: Colors.deepPurpleAccent),
+                  controller: _shortInfoTextEditingController,
+                  decoration: InputDecoration(
+                    hintText: "Short Info",
+                    hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+            ),
+            Divider(
               color: Colors.red,
             ),
-            title: Container(
-              width: 250.0,
-              child: TextField(
-                style: TextStyle(color: Colors.deepPurpleAccent),
-                controller: _shortInfoTextEditingController,
-                decoration: InputDecoration(
-                  hintText: "Short Info",
-                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
-                  border: InputBorder.none,
+            ListTile(
+              leading: Icon(
+                Icons.perm_device_information,
+                color: Colors.red,
+              ),
+              title: Container(
+                width: 250.0,
+                child: TextField(
+                  style: TextStyle(color: Colors.deepPurpleAccent),
+                  controller: _titleTextEditingController,
+                  decoration: InputDecoration(
+                    hintText: "Title",
+                    hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                    border: InputBorder.none,
+                  ),
                 ),
               ),
             ),
-          ),
-          Divider(
-            color: Colors.red,
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.perm_device_information,
+            Divider(
               color: Colors.red,
             ),
-            title: Container(
-              width: 250.0,
-              child: TextField(
-                style: TextStyle(color: Colors.deepPurpleAccent),
-                controller: _titleTextEditingController,
-                decoration: InputDecoration(
-                  hintText: "Title",
-                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
-                  border: InputBorder.none,
+            ListTile(
+              leading: Icon(
+                Icons.perm_device_information,
+                color: Colors.red,
+              ),
+              title: Container(
+                width: 250.0,
+                child: TextField(
+                  style: TextStyle(color: Colors.deepPurpleAccent),
+                  controller: _descriptionTextEditingController,
+                  decoration: InputDecoration(
+                    hintText: "Description",
+                    hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                    border: InputBorder.none,
+                  ),
                 ),
               ),
             ),
-          ),
-          Divider(
-            color: Colors.red,
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.perm_device_information,
+            Divider(
               color: Colors.red,
             ),
-            title: Container(
-              width: 250.0,
-              child: TextField(
-                style: TextStyle(color: Colors.deepPurpleAccent),
-                controller: _descriptionTextEditingController,
-                decoration: InputDecoration(
-                  hintText: "Description",
-                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
-                  border: InputBorder.none,
+            ListTile(
+              leading: Icon(
+                Icons.perm_device_information,
+                color: Colors.red,
+              ),
+              title: Container(
+                width: 250.0,
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(color: Colors.deepPurpleAccent),
+                  controller: _priceTextEditingController,
+                  decoration: InputDecoration(
+                    hintText: "Price",
+                    hintStyle: TextStyle(color: Colors.deepPurpleAccent),
+                    border: InputBorder.none,
+                  ),
                 ),
               ),
             ),
-          ),
-          Divider(
-            color: Colors.red,
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.perm_device_information,
+            Divider(
               color: Colors.red,
             ),
-            title: Container(
-              width: 250.0,
-              child: TextField(
-                keyboardType: TextInputType.number,
-                style: TextStyle(color: Colors.deepPurpleAccent),
-                controller: _priceTextEditingController,
-                decoration: InputDecoration(
-                  hintText: "Price",
-                  hintStyle: TextStyle(color: Colors.deepPurpleAccent),
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ),
-          Divider(
-            color: Colors.red,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

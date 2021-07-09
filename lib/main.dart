@@ -11,6 +11,7 @@ import 'Counters/cartitemcounter.dart';
 import 'Counters/changeAddresss.dart';
 import 'Counters/totalMoney.dart';
 import 'Store/storehome.dart';
+import 'package:url_strategy/url_strategy.dart';
 // import 'package:change_app_package_name/change_app_package_name.dart';
 
 Future<void> main() async {
@@ -19,7 +20,7 @@ Future<void> main() async {
   EcommerceApp.auth = FirebaseAuth.instance;
   EcommerceApp.sharedPreferences = await SharedPreferences.getInstance();
   EcommerceApp.firestore = Firestore.instance;
-
+  setPathUrlStrategy();
   runApp(MyApp());
 }
 
