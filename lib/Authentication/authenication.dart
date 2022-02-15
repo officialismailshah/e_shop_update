@@ -16,8 +16,8 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
       child: Scaffold(
         appBar: AppBar(
           flexibleSpace: Container(
-            decoration: new BoxDecoration(
-              gradient: new LinearGradient(
+            decoration: const BoxDecoration(
+              gradient: const LinearGradient(
                 colors: [Colors.redAccent, Colors.blueAccent],
                 begin: const FractionalOffset(0.0, 0.0),
                 end: const FractionalOffset(1.0, 0.0),

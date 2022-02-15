@@ -93,13 +93,13 @@ class _CartPageState extends State<CartPage> {
                           child: circularProgress(),
                         ),
                       )
-                    : snapshot.data.documents.length == 0
+                    : snapshot.data.docs.length == 0
                         ? beginBuildingCart()
                         : SliverList(
                             delegate: SliverChildBuilderDelegate(
                               (context, index) {
                                 ItemModel model = ItemModel.fromJson(
-                                    snapshot.data.documents[index].data);
+                                    snapshot.data.docs[index].data());
 
                                 if (index == 0) {
                                   totalAmount = 0;
@@ -107,7 +107,7 @@ class _CartPageState extends State<CartPage> {
                                 } else {
                                   totalAmount = model.price + totalAmount;
                                 }
-                                if (snapshot.data.documents.length - 1 ==
+                                if (snapshot.data.docs.length - 1 ==
                                     index) {
                                   WidgetsBinding.instance
                                       .addPostFrameCallback((t) {
@@ -122,7 +122,7 @@ class _CartPageState extends State<CartPage> {
                                         removeItemFromUsrCart(model.shortInfo));
                               },
                               childCount: snapshot.hasData
-                                  ? snapshot.data.documents.length
+                                  ? snapshot.data.docs.length
                                   : 0,
                             ),
                           );
@@ -163,9 +163,9 @@ class _CartPageState extends State<CartPage> {
 
     EcommerceApp.firestore
         .collection(EcommerceApp.collectionUser)
-        .document(
+        .doc(
             EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
-        .updateData({
+        .update({
       EcommerceApp.userCartList: tempCartList,
     }).then((v) {
       Fluttertoast.showToast(msg: "item Removed Successfully");

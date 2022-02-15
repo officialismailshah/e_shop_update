@@ -47,26 +47,26 @@ class _AddressState extends State<Address>
                 child: StreamBuilder<QuerySnapshot>(
                   stream: EcommerceApp.firestore.
                   collection(EcommerceApp.collectionUser)
-                  .document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
+                  .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
                   .collection(EcommerceApp.subCollectionAddress).snapshots(),
 
                   builder: (context, snapshot)
                   {
                     return !snapshot.hasData
                         ? Center(child: circularProgress(),)
-                        : snapshot.data.documents.length ==0
+                        : snapshot.data.docs.length ==0
                         ? noAddressCard()
                         : ListView.builder(
-                            itemCount: snapshot.data.documents.length,
+                            itemCount: snapshot.data.docs.length,
                             shrinkWrap: true,
                             itemBuilder: (context, index)
                             {
                               return AddressCard(
                                 currentIndex: address.count,
                                 value: index,
-                                addressId: snapshot.data.documents[index].documentID,
+                                addressId: snapshot.data.docs[index].id,
                                 totalAmount: widget.totalAmount,
-                                model: AddressModel.fromJson(snapshot.data.documents[index].data),
+                                model: AddressModel.fromJson(snapshot.data.docs[index].data()),
                               );
                             },
                            );

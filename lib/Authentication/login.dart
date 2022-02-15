@@ -147,7 +147,7 @@ class _LoginState extends State<Login> {
             message: "Authenticating, Please wait...",
           );
         });
-    FirebaseUser firebaseUser;
+    User firebaseUser;
     await _auth
         .signInWithEmailAndPassword(
       email: _emailTextEditingController.text.trim(),
@@ -174,26 +174,26 @@ class _LoginState extends State<Login> {
     }
   }
 
-  Future readData(FirebaseUser fUser) async {
-    Firestore.instance
+  Future readData(User fUser) async {
+    FirebaseFirestore.instance
         .collection("users")
-        .document(fUser.uid)
+        .doc(fUser.uid)
         .get()
         .then((dataSnapshot) async {
       await EcommerceApp.sharedPreferences
-          .setString("uid", dataSnapshot.data[EcommerceApp.userUID]);
+          .setString("uid", dataSnapshot[EcommerceApp.userUID]);
 
       await EcommerceApp.sharedPreferences.setString(
-          EcommerceApp.userEmail, dataSnapshot.data[EcommerceApp.userEmail]);
+          EcommerceApp.userEmail, dataSnapshot[EcommerceApp.userEmail]);
 
       await EcommerceApp.sharedPreferences.setString(
-          EcommerceApp.userName, dataSnapshot.data[EcommerceApp.userName]);
+          EcommerceApp.userName, dataSnapshot[EcommerceApp.userName]);
 
       await EcommerceApp.sharedPreferences.setString(EcommerceApp.userAvatarUrl,
-          dataSnapshot.data[EcommerceApp.userAvatarUrl]);
+          dataSnapshot[EcommerceApp.userAvatarUrl]);
 
       List<String> cartList =
-          dataSnapshot.data[EcommerceApp.userCartList].cast<String>();
+          dataSnapshot[EcommerceApp.userCartList].cast<String>();
       await EcommerceApp.sharedPreferences
           .setStringList(EcommerceApp.userCartList, cartList);
     });

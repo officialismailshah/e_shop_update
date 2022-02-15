@@ -92,11 +92,11 @@ class _PaymentPageState extends State<PaymentPage> {
     List tempList =
         EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
 
-    Firestore.instance
+    FirebaseFirestore.instance
         .collection("users")
-        .document(
+        .doc(
             EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
-        .updateData({
+        .update({
       EcommerceApp.userCartList: tempList,
     }).then((value) {
       EcommerceApp.sharedPreferences
@@ -113,21 +113,21 @@ class _PaymentPageState extends State<PaymentPage> {
   Future writeOrderDetailsForUser(Map<String, dynamic> data) async {
     await EcommerceApp.firestore
         .collection(EcommerceApp.collectionUser)
-        .document(
+        .doc(
             EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
         .collection(EcommerceApp.collectionOrders)
-        .document(
+        .doc(
             EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID) +
                 data['orderTime'])
-        .setData(data);
+        .set(data);
   }
 
   Future writeOrderDetailsForAdmin(Map<String, dynamic> data) async {
     await EcommerceApp.firestore
         .collection(EcommerceApp.collectionOrders)
-        .document(
+        .doc(
             EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID) +
                 data['orderTime'])
-        .setData(data);
+        .set(data);
   }
 }

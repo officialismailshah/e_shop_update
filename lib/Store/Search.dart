@@ -32,10 +32,10 @@ class _SearchProductState extends State<SearchProduct> {
             builder: (context, snap) {
               return snap.hasData
                   ? ListView.builder(
-                      itemCount: snap.data.documents.length,
+                      itemCount: snap.data.docs.length,
                       itemBuilder: (context, index) {
                         ItemModel model =
-                            ItemModel.fromJson(snap.data.documents[index].data);
+                            ItemModel.fromJson(snap.data.docs[index].data());
 
                         return sourceInfo(model, context);
                       },
@@ -97,9 +97,9 @@ class _SearchProductState extends State<SearchProduct> {
   }
 
   Future startSearching(String query) async {
-    docList = Firestore.instance
+    docList = FirebaseFirestore.instance
         .collection("items")
         .where("shortInfo", isGreaterThanOrEqualTo: query)
-        .getDocuments();
+        .get();
   }
 }

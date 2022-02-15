@@ -128,7 +128,7 @@ class _RegisterState extends State<Register> {
   }
 
   Future<void> _selectAndPickImage() async {
-    final file = await imageFile.getImage(source: ImageSource.gallery);
+    final file = await imageFile.pickImage(source: ImageSource.gallery);
     setState(() {
       imgFile = File(file.path);
     });
@@ -189,12 +189,12 @@ class _RegisterState extends State<Register> {
 
     String imageFileName = DateTime.now().millisecondsSinceEpoch.toString();
 
-    StorageReference storageReference =
+    Reference storageReference =
         FirebaseStorage.instance.ref().child(imageFileName);
 
-    StorageUploadTask storageUploadTask = storageReference.putFile(imgFile);
+    UploadTask storageUploadTask = storageReference.putFile(imgFile);
 
-    StorageTaskSnapshot taskSnapshot = await storageUploadTask.onComplete;
+    TaskSnapshot taskSnapshot = await storageUploadTask;
 
     await taskSnapshot.ref.getDownloadURL().then((urlImage) {
       userImageUrl = urlImage;
@@ -205,7 +205,7 @@ class _RegisterState extends State<Register> {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
   void _registerUser() async {
-    FirebaseUser firebaseUser;
+    User firebaseUser;
 
     await _auth
         .createUserWithEmailAndPassword(
@@ -234,8 +234,8 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  Future saveUserInfoToFireStore(FirebaseUser fUser) async {
-    Firestore.instance.collection("users").document(fUser.uid).setData({
+  Future saveUserInfoToFireStore(User fUser) async {
+    FirebaseFirestore.instance.collection("users").doc(fUser.uid).set({
       "uid": fUser.uid,
       "email": fUser.email,
       "name": _nameTextEditingController.text.trim(),

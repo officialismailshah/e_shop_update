@@ -159,14 +159,14 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
   }
 
   loginAdmin() {
-    Firestore.instance.collection("admins").getDocuments().then((snapshot) {
-      snapshot.documents.forEach((result) {
-        if (result.data["id"] != _adminIDTextEditingController.text.trim()) {
+    FirebaseFirestore.instance.collection("admins").get().then((snapshot) {
+      snapshot.docs.forEach((result) {
+        if (result["id"] != _adminIDTextEditingController.text.trim()) {
           // ignore: deprecated_member_use
           Scaffold.of(context).showSnackBar(
             SnackBar(content: Text("Your id is not correct.")),
           );
-        } else if (result.data["password"] !=
+        } else if (result["password"] !=
             _passwordTextEditingController.text.trim()) {
           // ignore: deprecated_member_use
           Scaffold.of(context).showSnackBar(
@@ -176,7 +176,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
           // ignore: deprecated_member_use
           Scaffold.of(context).showSnackBar(
             SnackBar(
-              content: Text("Welcome dear Admin." + result.data["name"]),
+              content: Text("Welcome dear Admin." + result["name"]),
             ),
           );
 

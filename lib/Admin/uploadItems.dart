@@ -205,7 +205,7 @@ class _UploadPageState extends State<UploadPage>
 
   pickPhotoFromGallery() async {
     Navigator.pop(context);
-    final imageFile = await ImagePicker().getImage(
+    final imageFile = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
 
@@ -394,18 +394,18 @@ class _UploadPageState extends State<UploadPage>
   }
 
   Future<String> uploadItemImage(mFileImage) async {
-    final StorageReference storageReference =
+    final Reference storageReference =
         FirebaseStorage.instance.ref().child("Items");
-    StorageUploadTask uploadTask =
+    UploadTask uploadTask =
         storageReference.child("product_$productId.jpg").putFile(mFileImage);
-    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    TaskSnapshot taskSnapshot = await uploadTask;
     String downloadUrl = await taskSnapshot.ref.getDownloadURL();
     return downloadUrl;
   }
 
   saveItemInfo(String downloadUrl) {
-    final itemsRef = Firestore.instance.collection("items");
-    itemsRef.document(productId).setData({
+    final itemsRef = FirebaseFirestore.instance.collection("items");
+    itemsRef.doc(productId).set({
       "shortInfo": _shortInfoTextEditingController.text.trim(),
       "longDescription": _descriptionTextEditingController.text.trim(),
       "price": int.parse(_priceTextEditingController.text),

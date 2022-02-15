@@ -56,7 +56,7 @@ class MenCategory extends StatelessWidget {
               ),
             ),
             StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance
+              stream: FirebaseFirestore.instance
                   .collection("items")
                   .limit(15)
                   .orderBy("publishedDate", descending: true)
@@ -68,15 +68,15 @@ class MenCategory extends StatelessWidget {
                           child: circularProgress(),
                         ),
                       )
-                    : SliverStaggeredGrid.countBuilder(
+                    : MasonryGridView.count(
                         crossAxisCount: 1,
-                        staggeredTileBuilder: (c) => StaggeredTile.fit(1),
+                        // staggeredTileBuilder: (c) => StaggeredTile.fit(1),
                         itemBuilder: (context, index) {
                           ItemModel model = ItemModel.fromJson(
-                              dataSnapshot.data.documents[index].data);
+                              dataSnapshot.data.docs[index].data());
                           return sourceInfo(model, context);
                         },
-                        itemCount: dataSnapshot.data.documents.length,
+                        itemCount: dataSnapshot.data.docs.length,
                       );
               },
             ),

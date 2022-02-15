@@ -3,7 +3,7 @@ import 'package:e_shop/Category/women.dart';
 import 'package:e_shop/Store/cart.dart';
 import 'package:e_shop/Store/product_page.dart';
 import 'package:e_shop/Counters/cartitemcounter.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -26,158 +26,163 @@ class _StoreHomeState extends State<StoreHome> {
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          flexibleSpace: Container(
-            decoration: new BoxDecoration(
-              gradient: new LinearGradient(
-                colors: [Colors.redAccent, Colors.blueAccent],
-                begin: const FractionalOffset(0.0, 0.0),
-                end: const FractionalOffset(1.0, 0.0),
-                stops: [0.0, 1.0],
-                tileMode: TileMode.clamp,
-              ),
+        child: Scaffold(
+      appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Colors.redAccent, Colors.blueAccent],
+              begin: const FractionalOffset(0.0, 0.0),
+              end: const FractionalOffset(1.0, 0.0),
+              stops: [0.0, 1.0],
+              tileMode: TileMode.clamp,
             ),
           ),
-          title: Text(
-            "onlineShop",
-            style: TextStyle(
-                fontSize: 55.0, color: Colors.white, fontFamily: "Signatra"),
-          ),
-          centerTitle: true,
-          actions: [
-            Stack(
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.shopping_cart,
-                    color: Colors.red,
-                  ),
-                  onPressed: () {
-                    Route route = MaterialPageRoute(builder: (c) => CartPage());
-                    Navigator.pushReplacement(context, route);
-                  },
-                ),
-                Positioned(
-                  child: Stack(
-                    children: [
-                      Icon(
-                        Icons.brightness_1,
-                        size: 20.0,
-                        color: Colors.green,
-                      ),
-                      Positioned(
-                        top: 3.0,
-                        bottom: 4.0,
-                        left: 4.0,
-                        child: Consumer<CartItemCounter>(
-                          builder: (context, counter, _) {
-                            return Text(
-                              (EcommerceApp.sharedPreferences
-                                          .getStringList(
-                                              EcommerceApp.userCartList)
-                                          .length -
-                                      1)
-                                  .toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w500),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
         ),
-        drawer: MyDrawer(),
-        body: CustomScrollView(
-          slivers: [
-            SliverPersistentHeader(pinned: true, delegate: SearchBoxDelegate()),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Fluttertoast.showToast(
-                            msg: "Men Category Is Coming Soon",
-                            toastLength: Toast.LENGTH_SHORT,
-                            gravity: ToastGravity
-                                .BOTTOM, // also possible "TOP" and "CENTER"
-                            backgroundColor: Colors.red[900],
-                            textColor: Colors.white,
+        title: Text(
+          "onlineShop",
+          style: TextStyle(
+              fontSize: 55.0, color: Colors.white, fontFamily: "Signatra"),
+        ),
+        centerTitle: true,
+        actions: [
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(
+                  Icons.shopping_cart,
+                  color: Colors.red,
+                ),
+                onPressed: () {
+                  Route route = MaterialPageRoute(builder: (c) => CartPage());
+                  Navigator.pushReplacement(context, route);
+                },
+              ),
+              Positioned(
+                child: Stack(
+                  children: [
+                    Icon(
+                      Icons.brightness_1,
+                      size: 20.0,
+                      color: Colors.green,
+                    ),
+                    Positioned(
+                      top: 3.0,
+                      bottom: 4.0,
+                      left: 4.0,
+                      child: Consumer<CartItemCounter>(
+                        builder: (context, counter, _) {
+                          return Text(
+                            (EcommerceApp.sharedPreferences
+                                        .getStringList(
+                                            EcommerceApp.userCartList)
+                                        .length -
+                                    1)
+                                .toString(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w500),
                           );
                         },
-                        child: Chip(
-                          backgroundColor: Colors.blue[600],
-                          label: Text(
-                            'Men',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
                       ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Route route = MaterialPageRoute(
-                              builder: (context) => WomenCategory());
-                          Navigator.push(context, route);
-                        },
-                        child: Chip(
-                          backgroundColor: Colors.blue[600],
-                          label: Text(
-                            'Women',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-                childCount: 1,
+                    ),
+                  ],
+                ),
               ),
-            ),
-            StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance
-                  .collection("items")
-                  .limit(15)
-                  .orderBy("publishedDate", descending: true)
-                  .snapshots(),
-              builder: (context, dataSnapshot) {
-                return !dataSnapshot.hasData
-                    ? SliverToBoxAdapter(
-                        child: Center(
-                          child: circularProgress(),
+            ],
+          ),
+        ],
+      ),
+      drawer: MyDrawer(),
+      body: CustomScrollView(
+        slivers: [
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: SearchBoxDelegate(),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Fluttertoast.showToast(
+                          msg: "Men Category Is Coming Soon",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity
+                              .BOTTOM, // also possible "TOP" and "CENTER"
+                          backgroundColor: Colors.red[900],
+                          textColor: Colors.white,
+                        );
+                      },
+                      child: Chip(
+                        backgroundColor: Colors.blue[600],
+                        label: Text(
+                          'Men',
+                          style: TextStyle(color: Colors.white),
                         ),
-                      )
-                    : SliverStaggeredGrid.countBuilder(
+                      ),
+                    ),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Route route = MaterialPageRoute(
+                            builder: (context) => WomenCategory());
+                        Navigator.push(context, route);
+                      },
+                      child: Chip(
+                        backgroundColor: Colors.blue[600],
+                        label: Text(
+                          'Women',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+              childCount: 1,
+            ),
+          ),
+          StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection("items")
+                .limit(15)
+                .orderBy("publishedDate", descending: true)
+                .snapshots(),
+            builder: (context, dataSnapshot) {
+              return !dataSnapshot.hasData
+                  ? SliverFillRemaining(
+                      child: Center(
+                        child: circularProgress(),
+                      ),
+                    )
+                  : SliverFillRemaining(
+                      child: MasonryGridView.count(
                         crossAxisCount: 1,
-                        staggeredTileBuilder: (c) => StaggeredTile.fit(1),
+                        // staggeredTileBuilder: (c) => StaggeredTile.fit(1),
                         itemBuilder: (context, index) {
                           ItemModel model = ItemModel.fromJson(
-                              dataSnapshot.data.documents[index].data);
+                            dataSnapshot.data.docs[index].data(),
+                          );
                           return sourceInfo(model, context);
                         },
-                        itemCount: dataSnapshot.data.documents.length,
-                      );
-              },
-            ),
-          ],
-        ),
+                        itemCount: dataSnapshot.data.docs.length,
+                      ),
+                    );
+            },
+          ),
+        ],
       ),
-    );
+    ));
   }
 }
 
@@ -420,8 +425,8 @@ addItemToCart(String shortInfoAsID, BuildContext context) {
 
   EcommerceApp.firestore
       .collection(EcommerceApp.collectionUser)
-      .document(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
-      .updateData({
+      .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
+      .update({
     EcommerceApp.userCartList: tempCartList,
   }).then((v) {
     Fluttertoast.showToast(msg: "item Added To Cart, Successfully");

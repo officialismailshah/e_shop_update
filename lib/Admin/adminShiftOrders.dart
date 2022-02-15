@@ -51,30 +51,29 @@ class _MyOrdersState extends State<AdminShiftOrders> {
             ),
           ),
           body: StreamBuilder<QuerySnapshot>(
-            stream: Firestore.instance.collection("orders").snapshots(),
+            stream: FirebaseFirestore.instance.collection("orders").snapshots(),
             builder: (c, snapshot) {
               return snapshot.hasData
                   ? ListView.builder(
-                      itemCount: snapshot.data.documents.length,
+                      itemCount: snapshot.data.docs.length,
                       itemBuilder: (c, index) {
                         return FutureBuilder<QuerySnapshot>(
-                          future: Firestore.instance
+                          future: FirebaseFirestore.instance
                               .collection("items")
                               .where("shortInfo",
-                                  whereIn: snapshot.data.documents[index]
-                                      .data[EcommerceApp.productID])
-                              .getDocuments(),
+                                  whereIn: snapshot.data.docs[index]
+                                      [EcommerceApp.productID])
+                              .get(),
                           builder: (c, snap) {
                             return snap.hasData
                                 ? AdminOrderCard(
-                                    itemCount: snap.data.documents.length,
-                                    data: snap.data.documents,
-                                    orderID: snapshot
-                                        .data.documents[index].documentID,
-                                    orderBy: snapshot
-                                        .data.documents[index].data["orderBy"],
-                                    addressID: snapshot.data.documents[index]
-                                        .data["addressID"],
+                                    itemCount: snap.data.docs.length,
+                                    data: snap.data.docs,
+                                    orderID: snapshot.data.docs[index].id,
+                                    orderBy: snapshot.data.docs[index]
+                                        ["orderBy"],
+                                    addressID: snapshot.data.docs[index]
+                                        ["addressID"],
                                   )
                                 : Center(
                                     child: circularProgress(),

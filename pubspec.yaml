@@ -1,7 +1,7 @@
 name: e_shop
 description: A new Flutter project.
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
@@ -9,21 +9,21 @@ environment:
   sdk: ">=2.11.0 <3.0.0"
 
 dependencies:
+  cloud_firestore: ^3.1.7
+  cupertino_icons: ^1.0.2
+  firebase_auth: ^3.3.6
+  firebase_core: ^1.12.0
+  firebase_storage: ^10.2.6
   flutter:
     sdk: flutter
-  change_app_package_name: ^1.0.0
-  cloud_firestore: ^0.13.2+1
-  cupertino_icons: ^1.0.2
-  firebase_auth: ^0.15.4
-  firebase_storage: ^3.1.1
-  flutter_staggered_grid_view: ^0.3.0
+  flutter_staggered_grid_view: ^0.6.1
   fluttertoast: ^8.0.7
-  image: ^2.0.7
-  image_picker: ^0.6.3+1
+  image: ^3.1.1
+  image_picker: ^0.8.4+5
   intl: null
-  path_provider: ^0.5.0+1
-  provider: ^4.0.4
-  shared_preferences: ^0.5.6+1
+  path_provider: ^2.0.8
+  provider: ^6.0.2
+  shared_preferences: ^2.0.12
   url_strategy: ^0.2.0
 
 dev_dependencies:

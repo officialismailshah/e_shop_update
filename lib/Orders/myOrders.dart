@@ -57,29 +57,29 @@ class _MyOrdersState extends State<MyOrders> {
         body: StreamBuilder<QuerySnapshot>(
           stream: EcommerceApp.firestore
               .collection(EcommerceApp.collectionUser)
-              .document(EcommerceApp.sharedPreferences
+              .doc(EcommerceApp.sharedPreferences
                   .getString(EcommerceApp.userUID))
               .collection(EcommerceApp.collectionOrders)
               .snapshots(),
           builder: (c, snapshot) {
             return snapshot.hasData
                 ? ListView.builder(
-                    itemCount: snapshot.data.documents.length,
+                    itemCount: snapshot.data.docs.length,
                     itemBuilder: (c, index) {
                       return FutureBuilder<QuerySnapshot>(
-                        future: Firestore.instance
+                        future: FirebaseFirestore.instance
                             .collection("items")
                             .where("shortInfo",
-                                whereIn: snapshot.data.documents[index]
-                                    .data[EcommerceApp.productID])
-                            .getDocuments(),
+                                whereIn: snapshot.data.docs[index]
+                                    [EcommerceApp.productID])
+                            .get(),
                         builder: (c, snap) {
                           return snap.hasData
                               ? OrderCard(
-                                  itemCount: snap.data.documents.length,
-                                  data: snap.data.documents,
+                                  itemCount: snap.data.docs.length,
+                                  data: snap.data.docs,
                                   orderID:
-                                      snapshot.data.documents[index].documentID,
+                                      snapshot.data.docs[index].id,
                                 )
                               : Center(
                                   child: circularProgress(),
