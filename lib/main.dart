@@ -76,8 +76,8 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Material(
       child: Container(
-        decoration: new BoxDecoration(
-          gradient: new LinearGradient(
+        decoration: const BoxDecoration(
+          gradient: const LinearGradient(
             colors: [Colors.redAccent, Colors.blueAccent],
             begin: const FractionalOffset(0.0, 0.0),
             end: const FractionalOffset(1.0, 0.0),
