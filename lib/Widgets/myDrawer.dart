@@ -7,6 +7,7 @@ import 'package:e_shop/Orders/myOrders.dart';
 import 'package:e_shop/Store/storehome.dart';
 // import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:flutter/services.dart';
 
 class MyDrawer extends StatelessWidget {
@@ -17,8 +18,8 @@ class MyDrawer extends StatelessWidget {
         children: [
           Container(
             padding: EdgeInsets.only(top: 25.0, bottom: 10.0),
-            decoration: new BoxDecoration(
-              gradient: new LinearGradient(
+            decoration: const BoxDecoration(
+              gradient: const LinearGradient(
                 colors: [Colors.redAccent, Colors.blueAccent],
                 begin: const FractionalOffset(0.0, 0.0),
                 end: const FractionalOffset(1.0, 0.0),
@@ -35,24 +36,38 @@ class MyDrawer extends StatelessWidget {
                     height: 160.0,
                     width: 160.0,
                     child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        EcommerceApp.sharedPreferences
-                            .getString(EcommerceApp.userAvatarUrl),
-                      ),
+                      backgroundImage: EcommerceApp.sharedPreferences
+                                  .getString(EcommerceApp.userAvatarUrl) ==
+                              null
+                          ? Image.asset('assets/images/person.png').image
+                          : NetworkImage(
+                              EcommerceApp.sharedPreferences
+                                  .getString(EcommerceApp.userAvatarUrl),
+                            ),
                     ),
                   ),
                 ),
                 SizedBox(
                   height: 10.0,
                 ),
-                Text(
-                  EcommerceApp.sharedPreferences
-                      .getString(EcommerceApp.userName),
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 35.0,
-                      fontFamily: "Signatra"),
-                ),
+                EcommerceApp.sharedPreferences
+                            .getString(EcommerceApp.userName) ==
+                        null
+                    ? Text(
+                        'Guest',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 35.0,
+                            fontFamily: "Signatra"),
+                      )
+                    : Text(
+                        EcommerceApp.sharedPreferences
+                            .getString(EcommerceApp.userName),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 35.0,
+                            fontFamily: "Signatra"),
+                      ),
               ],
             ),
           ),
@@ -61,8 +76,8 @@ class MyDrawer extends StatelessWidget {
           ),
           Container(
             padding: EdgeInsets.only(top: 1.0),
-            decoration: new BoxDecoration(
-              gradient: new LinearGradient(
+            decoration: const BoxDecoration(
+              gradient: const LinearGradient(
                 colors: [Colors.redAccent, Colors.blueAccent],
                 begin: const FractionalOffset(0.0, 0.0),
                 end: const FractionalOffset(1.0, 0.0),
@@ -102,8 +117,20 @@ class MyDrawer extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
-                    Route route = MaterialPageRoute(builder: (c) => MyOrders());
-                    Navigator.pushReplacement(context, route);
+                    if (EcommerceApp.auth.currentUser == null) {
+                      Fluttertoast.showToast(
+                        msg: "Please Login First",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity
+                            .BOTTOM, // also possible "TOP" and "CENTER"
+                        backgroundColor: Colors.red[900],
+                        textColor: Colors.white,
+                      );
+                    } else {
+                      Route route =
+                          MaterialPageRoute(builder: (c) => MyOrders());
+                      Navigator.pushReplacement(context, route);
+                    }
                   },
                 ),
                 Divider(
@@ -121,8 +148,20 @@ class MyDrawer extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
-                    Route route = MaterialPageRoute(builder: (c) => CartPage());
-                    Navigator.pushReplacement(context, route);
+                    if (EcommerceApp.auth.currentUser == null) {
+                      Fluttertoast.showToast(
+                        msg: "Please Login First",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity
+                            .BOTTOM, // also possible "TOP" and "CENTER"
+                        backgroundColor: Colors.red[900],
+                        textColor: Colors.white,
+                      );
+                    } else {
+                      Route route =
+                          MaterialPageRoute(builder: (c) => CartPage());
+                      Navigator.pushReplacement(context, route);
+                    }
                   },
                 ),
                 Divider(
@@ -160,9 +199,20 @@ class MyDrawer extends StatelessWidget {
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
-                    Route route =
-                        MaterialPageRoute(builder: (c) => AddAddress());
-                    Navigator.pushReplacement(context, route);
+                    if (EcommerceApp.auth.currentUser == null) {
+                      Fluttertoast.showToast(
+                        msg: "Please Login First",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity
+                            .BOTTOM, // also possible "TOP" and "CENTER"
+                        backgroundColor: Colors.red[900],
+                        textColor: Colors.white,
+                      );
+                    } else {
+                      Route route =
+                          MaterialPageRoute(builder: (c) => AddAddress());
+                      Navigator.pushReplacement(context, route);
+                    }
                   },
                 ),
                 Divider(
@@ -180,11 +230,18 @@ class MyDrawer extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     ),
                     onTap: () {
-                      EcommerceApp.auth.signOut().then((c) {
-                        Route route = MaterialPageRoute(
-                            builder: (c) => AuthenticScreen());
-                        Navigator.pushReplacement(context, route);
-                      });
+                      if (EcommerceApp.auth.currentUser == null) {
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (c) => AuthenticScreen()));
+                      } else {
+                        EcommerceApp.auth.signOut().then((c) {
+                          Route route = MaterialPageRoute(
+                              builder: (c) => AuthenticScreen());
+                          Navigator.pushReplacement(context, route);
+                        });
+                      }
                     }),
                 Divider(
                   height: 10.0,

@@ -40,7 +40,7 @@ class _StoreHomeState extends State<StoreHome> {
           ),
         ),
         title: Text(
-          "onlineShop",
+          "OnlineShop",
           style: TextStyle(
               fontSize: 55.0, color: Colors.white, fontFamily: "Signatra"),
         ),
@@ -54,8 +54,20 @@ class _StoreHomeState extends State<StoreHome> {
                   color: Colors.red,
                 ),
                 onPressed: () {
-                  Route route = MaterialPageRoute(builder: (c) => CartPage());
-                  Navigator.pushReplacement(context, route);
+                  if (EcommerceApp.auth.currentUser == null) {
+                    // Toast.show("Please Login First", context, duration: Toast.LENGTH_LONG);
+                    Fluttertoast.showToast(
+                        msg: "Please Login First",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.red,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+                  } else {
+                    Route route = MaterialPageRoute(builder: (c) => CartPage());
+                    Navigator.pushReplacement(context, route);
+                  }
                 },
               ),
               Positioned(
@@ -72,18 +84,27 @@ class _StoreHomeState extends State<StoreHome> {
                       left: 4.0,
                       child: Consumer<CartItemCounter>(
                         builder: (context, counter, _) {
-                          return Text(
-                            (EcommerceApp.sharedPreferences
-                                        .getStringList(
-                                            EcommerceApp.userCartList)
-                                        .length -
-                                    1)
-                                .toString(),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w500),
-                          );
+                          return counter.count ==
+                                  null
+                              ? Text(
+                                  '0',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.w500),
+                                )
+                              : Text(
+                                  (EcommerceApp.sharedPreferences
+                                              .getStringList(
+                                                  EcommerceApp.userCartList)
+                                              .length -
+                                          1)
+                                      .toString(),
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12.0,
+                                      fontWeight: FontWeight.w500),
+                                );
                         },
                       ),
                     ),
@@ -356,7 +377,18 @@ Widget sourceInfo(ItemModel model, BuildContext context,
                               color: Colors.redAccent,
                             ),
                             onPressed: () {
-                              checkItemInCart(model.shortInfo, context);
+                              if (EcommerceApp.auth.currentUser == null) {
+                                Fluttertoast.showToast(
+                                  msg: 'Please Login First',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity
+                                      .BOTTOM, // also possible "TOP" and "CENTER"
+                                  backgroundColor: Colors.red[900],
+                                  textColor: Colors.white,
+                                );
+                              } else {
+                                checkItemInCart(model.shortInfo, context);
+                              }
                             },
                           )
                         : IconButton(

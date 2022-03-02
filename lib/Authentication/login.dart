@@ -85,7 +85,28 @@ class _LoginState extends State<Login> {
               ),
             ),
             SizedBox(
-              height: 30.0,
+              height: 20.0,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => StoreHome(),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red,
+              ),
+              child: Text(
+                "Login As Guest",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
             ),
             Container(
               height: 4.0,
@@ -106,7 +127,7 @@ class _LoginState extends State<Login> {
                   color: Colors.red,
                 )),
                 label: Text(
-                  "i'm Admin",
+                  "I'm Admin",
                   style:
                       TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
                 ),
@@ -115,7 +136,7 @@ class _LoginState extends State<Login> {
 
             // Padding(
             //   padding: const EdgeInsets.all(0.0),
-              // ignore: deprecated_member_use
+            // ignore: deprecated_member_use
             //   child: FlatButton.icon(
             //     onPressed: () => Navigator.push(
             //         context,
@@ -189,8 +210,8 @@ class _LoginState extends State<Login> {
       await EcommerceApp.sharedPreferences.setString(
           EcommerceApp.userName, dataSnapshot[EcommerceApp.userName]);
 
-      await EcommerceApp.sharedPreferences.setString(EcommerceApp.userAvatarUrl,
-          dataSnapshot[EcommerceApp.userAvatarUrl]);
+      await EcommerceApp.sharedPreferences.setString(
+          EcommerceApp.userAvatarUrl, dataSnapshot[EcommerceApp.userAvatarUrl]);
 
       List<String> cartList =
           dataSnapshot[EcommerceApp.userCartList].cast<String>();

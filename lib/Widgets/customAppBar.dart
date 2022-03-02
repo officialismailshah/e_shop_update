@@ -24,8 +24,8 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
         color: Colors.white,
       ),
       flexibleSpace: Container(
-        decoration: new BoxDecoration(
-          gradient: new LinearGradient(
+        decoration: const BoxDecoration(
+          gradient: const LinearGradient(
             colors: [Colors.redAccent, Colors.blueAccent],
             begin: const FractionalOffset(0.0, 0.0),
             end: const FractionalOffset(1.0, 0.0),
@@ -68,17 +68,26 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
                     left: 4.0,
                     child: Consumer<CartItemCounter>(
                       builder: (context, counter, _) {
-                        return Text(
-                          (EcommerceApp.sharedPreferences
-                                      .getStringList(EcommerceApp.userCartList)
-                                      .length -
-                                  1)
-                              .toString(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.w500),
-                        );
+                        return counter.count == null
+                            ? Text(
+                                '0',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w500),
+                              )
+                            : Text(
+                                (EcommerceApp.sharedPreferences
+                                            .getStringList(
+                                                EcommerceApp.userCartList)
+                                            .length -
+                                        1)
+                                    .toString(),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w500),
+                              );
                       },
                     ),
                   ),

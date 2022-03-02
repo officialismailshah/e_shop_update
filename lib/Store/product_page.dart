@@ -1,8 +1,10 @@
+import 'package:e_shop/Config/config.dart';
 import 'package:e_shop/Widgets/customAppBar.dart';
 // import 'package:e_shop/Widgets/myDrawer.dart';
 import 'package:e_shop/Models/item.dart';
 import 'package:flutter/material.dart';
 import 'package:e_shop/Store/storehome.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ProductPage extends StatefulWidget {
   final ItemModel itemModel;
@@ -85,11 +87,24 @@ class _ProductPageState extends State<ProductPage> {
                       padding: EdgeInsets.only(top: 8.0),
                       child: Center(
                         child: InkWell(
-                          onTap: () => checkItemInCart(
-                              widget.itemModel.shortInfo, context),
+                          onTap: () {
+                            if (EcommerceApp.auth.currentUser == null) {
+                              Fluttertoast.showToast(
+                                msg: 'Please Login First',
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity
+                                    .BOTTOM, // also possible "TOP" and "CENTER"
+                                backgroundColor: Colors.red[900],
+                                textColor: Colors.white,
+                              );
+                            } else {
+                              checkItemInCart(
+                                  widget.itemModel.shortInfo, context);
+                            }
+                          },
                           child: Container(
-                            decoration: new BoxDecoration(
-                              gradient: new LinearGradient(
+                            decoration: const BoxDecoration(
+                              gradient: const LinearGradient(
                                 colors: [Colors.redAccent, Colors.blueAccent],
                                 begin: const FractionalOffset(0.0, 0.0),
                                 end: const FractionalOffset(1.0, 0.0),

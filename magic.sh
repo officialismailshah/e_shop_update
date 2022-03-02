@@ -1,3 +1,4 @@
 flutter clean
 flutter pub get
-flutter run
+# flutter run
+flutter build apk --release

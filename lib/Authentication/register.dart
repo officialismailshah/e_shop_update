@@ -147,25 +147,25 @@ class _RegisterState extends State<Register> {
   // }
 
   Future<void> uploadAndSaveImage() async {
-    if (imgFile == null) {
-      showDialog(
-          context: context,
-          builder: (c) {
-            return ErrorAlertDialog(
-              message: "Please select an image file.",
-            );
-          });
-    } else {
-      _passwordTextEditingController.text ==
-              _cPasswordTextEditingController.text
-          ? _emailTextEditingController.text.isNotEmpty &&
-                  _passwordTextEditingController.text.isNotEmpty &&
-                  _cPasswordTextEditingController.text.isNotEmpty &&
-                  _nameTextEditingController.text.isNotEmpty
-              ? uploadToStorage()
-              : displayDialog("Please fill up the registration complete form..")
-          : displayDialog("Password do not match.");
-    }
+    _passwordTextEditingController.text == _cPasswordTextEditingController.text
+        ? _emailTextEditingController.text.isNotEmpty &&
+                _passwordTextEditingController.text.isNotEmpty &&
+                _cPasswordTextEditingController.text.isNotEmpty &&
+                _nameTextEditingController.text.isNotEmpty
+            ? uploadToStorage()
+            : displayDialog("Please fill up the registration complete form..")
+        : displayDialog("Password do not match.");
+    // if (imgFile == null) {
+    //   showDialog(
+    //       context: context,
+    //       builder: (c) {
+    //         return ErrorAlertDialog(
+    //           message: "Please select an image file.",
+    //         );
+    //       });
+    // } else {
+
+    // }
   }
 
   displayDialog(String msg) {
@@ -179,28 +179,31 @@ class _RegisterState extends State<Register> {
   }
 
   uploadToStorage() async {
-    showDialog(
-        context: context,
-        builder: (c) {
-          return LoadingAlertDialog(
-            message: "'Registering, Please wait.....'",
-          );
-        });
-
-    String imageFileName = DateTime.now().millisecondsSinceEpoch.toString();
-
-    Reference storageReference =
-        FirebaseStorage.instance.ref().child(imageFileName);
-
-    UploadTask storageUploadTask = storageReference.putFile(imgFile);
-
-    TaskSnapshot taskSnapshot = await storageUploadTask;
-
-    await taskSnapshot.ref.getDownloadURL().then((urlImage) {
-      userImageUrl = urlImage;
-
+    if (imgFile == null) {
+      showDialog(
+          context: context,
+          builder: (c) {
+            return LoadingAlertDialog(
+              message: "'Registering, Please wait.....'",
+            );
+          });
       _registerUser();
-    });
+    } else {
+      String imageFileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+      Reference storageReference =
+          FirebaseStorage.instance.ref().child(imageFileName);
+
+      UploadTask storageUploadTask = storageReference.putFile(imgFile);
+
+      TaskSnapshot taskSnapshot = await storageUploadTask;
+
+      await taskSnapshot.ref.getDownloadURL().then((urlImage) {
+        userImageUrl = urlImage;
+
+        _registerUser();
+      });
+    }
   }
 
   FirebaseAuth _auth = FirebaseAuth.instance;
