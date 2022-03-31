@@ -84,8 +84,12 @@ class _StoreHomeState extends State<StoreHome> {
                       left: 4.0,
                       child: Consumer<CartItemCounter>(
                         builder: (context, counter, _) {
-                          return counter.count ==
-                                  null
+                          return counter.count == null &&
+                                  EcommerceApp.sharedPreferences
+                                          .getStringList(
+                                              EcommerceApp.userCartList)
+                                          .length ==
+                                      0
                               ? Text(
                                   '0',
                                   style: TextStyle(
@@ -443,6 +447,8 @@ Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
 }
 
 void checkItemInCart(String shortInfoAsID, BuildContext context) {
+  print('checking');
+  print(shortInfoAsID);
   EcommerceApp.sharedPreferences
           .getStringList(EcommerceApp.userCartList)
           .contains(shortInfoAsID)
@@ -451,8 +457,10 @@ void checkItemInCart(String shortInfoAsID, BuildContext context) {
 }
 
 addItemToCart(String shortInfoAsID, BuildContext context) {
+  print('adding');
   List tempCartList =
       EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
+  print(tempCartList == null ? "null" : tempCartList.toString());
   tempCartList.add(shortInfoAsID);
 
   EcommerceApp.firestore

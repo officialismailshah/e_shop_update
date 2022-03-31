@@ -43,7 +43,7 @@ class _CartPageState extends State<CartPage> {
             if (EcommerceApp.sharedPreferences
                     .getStringList(EcommerceApp.userCartList)
                     .length ==
-                1) {
+                0) {
               Fluttertoast.showToast(msg: "Your Cart is empty");
             } else {
               Route route = MaterialPageRoute(
