@@ -89,7 +89,7 @@ class _StoreHomeState extends State<StoreHome> {
                                           .getStringList(
                                               EcommerceApp.userCartList)
                                           .length ==
-                                      0
+                                      1
                               ? Text(
                                   '0',
                                   style: TextStyle(

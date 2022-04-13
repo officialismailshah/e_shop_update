@@ -64,8 +64,8 @@ class _UploadPageState extends State<UploadPage>
       child: Scaffold(
         appBar: AppBar(
           flexibleSpace: Container(
-            decoration: new BoxDecoration(
-              gradient: new LinearGradient(
+            decoration: const BoxDecoration(
+              gradient: const LinearGradient(
                 colors: [Colors.redAccent, Colors.blueAccent],
                 begin: const FractionalOffset(0.0, 0.0),
                 end: const FractionalOffset(1.0, 0.0),
@@ -86,8 +86,7 @@ class _UploadPageState extends State<UploadPage>
             },
           ),
           actions: [
-            // ignore: deprecated_member_use
-            FlatButton(
+            ElevatedButton(
               child: Text(
                 "Logout",
                 style: TextStyle(
@@ -110,8 +109,8 @@ class _UploadPageState extends State<UploadPage>
 
   getAdminHomeScreenBody() {
     return Container(
-      decoration: new BoxDecoration(
-        gradient: new LinearGradient(
+      decoration: const BoxDecoration(
+        gradient: const LinearGradient(
           colors: [Colors.redAccent, Colors.blueAccent],
           begin: const FractionalOffset(0.0, 0.0),
           end: const FractionalOffset(1.0, 0.0),
@@ -131,14 +130,16 @@ class _UploadPageState extends State<UploadPage>
             Padding(
               padding: EdgeInsets.only(top: 20.0),
               // ignore: deprecated_member_use
-              child: RaisedButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(9.0)),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(9.0)),
+                  primary: Colors.blueAccent,
+                ),
                 child: Text(
                   "Add New Items",
                   style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
-                color: Colors.blueAccent,
                 onPressed: () => takeImage(context),
               ),
             ),
@@ -194,8 +195,7 @@ class _UploadPageState extends State<UploadPage>
 
   capturePhotoWithCamera() async {
     Navigator.pop(context);
-    // ignore: deprecated_member_use
-    final imageFile = await ImagePicker().getImage(
+    final imageFile = await ImagePicker().pickImage(
         source: ImageSource.camera, maxHeight: 680.0, maxWidth: 970.0);
 
     setState(() {
@@ -214,6 +214,7 @@ class _UploadPageState extends State<UploadPage>
     });
   }
 
+  String category = 'Men';
   displayAdminUploadFormScreen() {
     return WillPopScope(
       onWillPop: () async {
@@ -224,9 +225,12 @@ class _UploadPageState extends State<UploadPage>
       child: Scaffold(
         appBar: AppBar(
           flexibleSpace: Container(
-            decoration: new BoxDecoration(
-              gradient: new LinearGradient(
-                colors: [Colors.redAccent, Colors.blueAccent],
+            decoration: const BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [
+                  Colors.redAccent,
+                  Colors.blueAccent,
+                ],
                 begin: const FractionalOffset(0.0, 0.0),
                 end: const FractionalOffset(1.0, 0.0),
                 stops: [0.0, 1.0],
@@ -282,6 +286,34 @@ class _UploadPageState extends State<UploadPage>
               ),
             ),
             Padding(padding: EdgeInsets.only(top: 12.0)),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30),
+              child: DropdownButtonFormField(
+                  hint: Text(
+                    'Select Category',
+                    style: TextStyle(color: Colors.deepPurpleAccent),
+                  ),
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                  // value: value,
+                  items: ['Men', 'Women', 'Child']
+                      .map<DropdownMenuItem<String>>((e) =>
+                          DropdownMenuItem<String>(
+                            child: Text(
+                              e,
+                              style: TextStyle(color: Colors.deepPurpleAccent),
+                            ),
+                            value: e,
+                          ))
+                      .toList(),
+                  onChanged: (String e) {
+                    setState(() {
+                      category = e.toLowerCase();
+                    });
+                    print(e);
+                  }),
+            ),
             ListTile(
               leading: Icon(
                 Icons.perm_device_information,
@@ -404,7 +436,7 @@ class _UploadPageState extends State<UploadPage>
   }
 
   saveItemInfo(String downloadUrl) {
-    final itemsRef = FirebaseFirestore.instance.collection("items");
+    final itemsRef = FirebaseFirestore.instance.collection(category);
     itemsRef.doc(productId).set({
       "shortInfo": _shortInfoTextEditingController.text.trim(),
       "longDescription": _descriptionTextEditingController.text.trim(),
