@@ -436,8 +436,18 @@ class _UploadPageState extends State<UploadPage>
   }
 
   saveItemInfo(String downloadUrl) {
-    final itemsRef = FirebaseFirestore.instance.collection(category);
-    itemsRef.doc(productId).set({
+    final selectedRef = FirebaseFirestore.instance.collection(category);
+    final generalRef = FirebaseFirestore.instance.collection('items');
+    selectedRef.doc(productId).set({
+      "shortInfo": _shortInfoTextEditingController.text.trim(),
+      "longDescription": _descriptionTextEditingController.text.trim(),
+      "price": int.parse(_priceTextEditingController.text),
+      "publishedDate": DateTime.now(),
+      "status": "available",
+      "thumbnailUrl": downloadUrl,
+      "title": _titleTextEditingController.text.trim(),
+    });
+    generalRef.doc(productId).set({
       "shortInfo": _shortInfoTextEditingController.text.trim(),
       "longDescription": _descriptionTextEditingController.text.trim(),
       "price": int.parse(_priceTextEditingController.text),

@@ -88,7 +88,7 @@ class _CartPageState extends State<CartPage> {
                   .snapshots(),
               builder: (context, snapshot) {
                 return !snapshot.hasData
-                    ? SliverToBoxAdapter(
+                    ? SliverFillRemaining(
                         child: Center(
                           child: circularProgress(),
                         ),
