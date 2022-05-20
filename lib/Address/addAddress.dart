@@ -14,6 +14,8 @@ class AddAddress extends StatelessWidget {
   final cState = TextEditingController();
   final cPinCode = TextEditingController();
 
+   String _phone;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -82,10 +84,24 @@ class AddAddress extends StatelessWidget {
                       hint: "Name",
                       controller: cName,
                     ),
-                    MyTextField(
-                      hint: "Phone Number",
-                      controller: cPhoneNumber,
-                    ),
+                   Container(
+                     padding: EdgeInsets.fromLTRB(6.0, 2.0, 6.0, 0.0),
+                     child: TextFormField(
+                        
+                   controller: cPhoneNumber,
+                   
+                   decoration: InputDecoration(labelText: 'Enter Number' , border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blue,width: 5.0 ),),),
+                   
+                     keyboardType: TextInputType.phone,
+                     
+                      validator: validatePhone,
+                             onSaved: (String val) {
+                               _phone = val;
+                             },
+                           
+                   
+                     ),
+                   ),
                     MyTextField(
                       hint: "Flat Number / House Number",
                       controller: cFlatHomeNumber,
@@ -111,7 +127,16 @@ class AddAddress extends StatelessWidget {
       ),
     );
   }
+    String validatePhone(String value) {
+
+    if (value.length != 11)
+      return 'Mobile Number must be of 11 digit';
+    else
+      return null;
+  }
 }
+
+
 
 class MyTextField extends StatelessWidget {
   final String hint;
@@ -129,8 +154,10 @@ class MyTextField extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       child: TextFormField(
         controller: controller,
-        decoration: InputDecoration.collapsed(hintText: hint),
-        validator: (val) => val.isEmpty ? "Field can not be empty" : null,
+         decoration: InputDecoration(border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blue,width: 5.0 ),  ),hintText:hint , ),
+        validator: (val) {
+          return val.isEmpty ? "Field can not be empty" : null;
+        }
       ),
     );
   }
