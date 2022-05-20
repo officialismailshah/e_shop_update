@@ -8,7 +8,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class ProductPage extends StatefulWidget {
   final ItemModel itemModel;
-  ProductPage({this.itemModel});
+  final String category;
+  ProductPage({this.itemModel, this.category});
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -98,8 +99,8 @@ class _ProductPageState extends State<ProductPage> {
                                 textColor: Colors.white,
                               );
                             } else {
-                              checkItemInCart(
-                                  widget.itemModel.shortInfo, context);
+                              checkItemInCart(widget.itemModel.shortInfo,
+                                  context, );
                             }
                           },
                           child: Container(

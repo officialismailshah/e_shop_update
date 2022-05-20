@@ -73,6 +73,7 @@ class _RegisterState extends State<Register> {
               child: Column(
                 children: [
                   CustomTextField(
+                    isName: true,
                     controller: _nameTextEditingController,
                     data: Icons.person,
                     hintText: "Name",

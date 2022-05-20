@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_shop/Category/women.dart';
+import 'package:e_shop/Category/category.dart';
+// import 'package:e_shop/Category/women.dart';
 import 'package:e_shop/Store/cart.dart';
 import 'package:e_shop/Store/product_page.dart';
 import 'package:e_shop/Counters/cartitemcounter.dart';
@@ -84,12 +85,14 @@ class _StoreHomeState extends State<StoreHome> {
                       left: 4.0,
                       child: Consumer<CartItemCounter>(
                         builder: (context, counter, _) {
+                          // print(
+                          //     """${EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList).length}""");
                           return counter.count == null &&
                                   EcommerceApp.sharedPreferences
                                           .getStringList(
                                               EcommerceApp.userCartList)
                                           .length ==
-                                      0
+                                      1
                               ? Text(
                                   '0',
                                   style: TextStyle(
@@ -137,14 +140,10 @@ class _StoreHomeState extends State<StoreHome> {
                     ),
                     InkWell(
                       onTap: () {
-                        Fluttertoast.showToast(
-                          msg: "Men Category Is Coming Soon",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity
-                              .BOTTOM, // also possible "TOP" and "CENTER"
-                          backgroundColor: Colors.red[900],
-                          textColor: Colors.white,
-                        );
+                        Route route = MaterialPageRoute(
+                            builder: ((context) =>
+                                GeneralCatgory(title: 'Men', category: 'men')));
+                        Navigator.of(context).push(route);
                       },
                       child: Chip(
                         backgroundColor: Colors.blue[600],
@@ -160,7 +159,10 @@ class _StoreHomeState extends State<StoreHome> {
                     InkWell(
                       onTap: () {
                         Route route = MaterialPageRoute(
-                            builder: (context) => WomenCategory());
+                            builder: (context) => GeneralCatgory(
+                                  category: 'women',
+                                  title: "Women",
+                                ));
                         Navigator.push(context, route);
                       },
                       child: Chip(
@@ -212,11 +214,11 @@ class _StoreHomeState extends State<StoreHome> {
 }
 
 Widget sourceInfo(ItemModel model, BuildContext context,
-    {Color background, removeCartFunction}) {
+    {Color background, removeCartFunction, String category}) {
   return InkWell(
     onTap: () {
-      Route route =
-          MaterialPageRoute(builder: (c) => ProductPage(itemModel: model));
+      Route route = MaterialPageRoute(
+          builder: (c) => ProductPage(itemModel: model, category: category));
       Navigator.pushReplacement(context, route);
     },
     splashColor: Colors.yellow,
@@ -447,8 +449,9 @@ Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
 }
 
 void checkItemInCart(String shortInfoAsID, BuildContext context) {
-  print('checking');
-  print(shortInfoAsID);
+  // print('checking');
+  // print(shortInfoAsID);
+
   EcommerceApp.sharedPreferences
           .getStringList(EcommerceApp.userCartList)
           .contains(shortInfoAsID)
@@ -456,11 +459,14 @@ void checkItemInCart(String shortInfoAsID, BuildContext context) {
       : addItemToCart(shortInfoAsID, context);
 }
 
-addItemToCart(String shortInfoAsID, BuildContext context) {
-  print('adding');
+addItemToCart(
+  String shortInfoAsID,
+  BuildContext context,
+) {
+  // print('adding');
   List tempCartList =
       EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
-  print(tempCartList == null ? "null" : tempCartList.toString());
+  // print(tempCartList == null ? "null" : tempCartList.toString());
   tempCartList.add(shortInfoAsID);
 
   EcommerceApp.firestore
