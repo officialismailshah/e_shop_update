@@ -221,7 +221,7 @@ Widget sourceInfo(ItemModel model, BuildContext context,
           builder: (c) => ProductPage(itemModel: model, category: category));
       Navigator.pushReplacement(context, route);
     },
-    splashColor: Colors.red,
+    splashColor: Colors.yellow,
     child: Padding(
       padding: EdgeInsets.all(6.0),
       child: Container(
