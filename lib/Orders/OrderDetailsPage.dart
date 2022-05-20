@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/Address/address.dart';
 import 'package:e_shop/Config/config.dart';
+import 'package:e_shop/Widgets/feedbackscreen.dart';
 // import 'package:e_shop/Store/storehome.dart';
 import 'package:e_shop/Widgets/loadingWidget.dart';
 import 'package:e_shop/Widgets/orderCard.dart';
 import 'package:e_shop/Models/address.dart';
-import 'package:e_shop/main.dart';
+// import 'package:e_shop/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -312,7 +313,7 @@ class ShippingDetails extends StatelessWidget {
 
     getOrderId = "";
 
-    Route route = MaterialPageRoute(builder: (c) => SplashScreen());
+    Route route = MaterialPageRoute(builder: (c) => FeedbackScreen());
     Navigator.pushReplacement(context, route);
 
     Fluttertoast.showToast(msg: "Order has been Received, Confirmed");

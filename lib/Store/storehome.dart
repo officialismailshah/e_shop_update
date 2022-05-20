@@ -92,7 +92,7 @@ class _StoreHomeState extends State<StoreHome> {
                                           .getStringList(
                                               EcommerceApp.userCartList)
                                           .length ==
-                                      1
+                                      1 || EcommerceApp.auth.currentUser == null
                               ? Text(
                                   '0',
                                   style: TextStyle(
@@ -142,7 +142,7 @@ class _StoreHomeState extends State<StoreHome> {
                       onTap: () {
                         Route route = MaterialPageRoute(
                             builder: ((context) =>
-                                GeneralCatgory(title: 'Men', category: 'men')));
+                                GeneralCatgory(title: 'Child', category: 'child')));
                         Navigator.of(context).push(route);
                       },
                       child: Chip(
@@ -200,7 +200,7 @@ class _StoreHomeState extends State<StoreHome> {
                           ItemModel model = ItemModel.fromJson(
                             dataSnapshot.data.docs[index].data(),
                           );
-                          return sourceInfo(model, context);
+                          return designUpdate(model, context);
                         },
                         itemCount: dataSnapshot.data.docs.length,
                       ),
@@ -423,6 +423,235 @@ Widget sourceInfo(ItemModel model, BuildContext context,
     ),
   );
 }
+Widget designUpdate(ItemModel model, BuildContext context,
+
+    {Color background, removeCartFunction, String category}) {
+  return InkWell(
+    onTap: () {
+      Route route = MaterialPageRoute(
+          builder: (c) => ProductPage(itemModel: model, category: category));
+      Navigator.pushReplacement(context, route);
+    },
+    splashColor: Colors.red,
+    child: Padding(
+      padding: EdgeInsets.all(6.0),
+      child: Card(
+      color: Colors.white,
+      shape: RoundedRectangleBorder(  
+        
+            borderRadius: BorderRadius.circular(15.0),  
+          
+          ),  
+          
+      elevation: 10.0,
+      
+      shadowColor: Colors.pink,
+        child: Container(
+        //   decoration: BoxDecoration(
+          
+        //   border: Border.all(
+        // color: Colors.blue,
+        //   ),
+        //   borderRadius: BorderRadius.circular(12.0,),
+          
+        
+          height: 190.0,
+          width: width,
+          child: Row(
+            children: [
+              Image.network(
+                model.thumbnailUrl,
+                width: 100.0,
+                height: 100.0,
+              ),
+              SizedBox(
+                width: 4.0,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                    Container(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              model.title,
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 14.0),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    Container(
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              model.shortInfo,
+                              style: TextStyle(
+                                  color: Colors.black54, fontSize: 12.0),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            color: Colors.red,
+                          ),
+                          alignment: Alignment.topLeft,
+                          width: 40.0,
+                          height: 43.0,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "20%",
+                                  style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                                Text(
+                                  "OFF",
+                                  style: TextStyle(
+                                      fontSize: 12.0,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.normal),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10.0,
+                        ),
+         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(top: 0.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    r"Original Price: Rs ",
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.grey,
+                                      decoration: TextDecoration.lineThrough,
+                                    ),
+                                  ),
+                                  Text(
+                                    (model.price + model.price).toString(),
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.grey,
+                                      decoration: TextDecoration.lineThrough,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 5.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    r"New Price: ",
+                                    style: TextStyle(
+                                      fontSize: 14.0,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Rs ",
+                                    style: TextStyle(
+                                        color: Colors.red, fontSize: 16.0),
+                                  ),
+                                  Text(
+                                    (model.price).toString(),
+                                    style: TextStyle(
+                                      fontSize: 15.0,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Flexible(
+                      child: Container(),
+                    ),
+      
+                    // to implement cart item add/remove feature
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: removeCartFunction == null
+                          ? IconButton(
+                              icon: Icon(
+                                Icons.add_shopping_cart,
+                                color: Colors.redAccent,
+                              ),
+                              onPressed: () {
+                                if (EcommerceApp.auth.currentUser == null) {
+                                  Fluttertoast.showToast(
+                                    msg: 'Please Login First',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity
+                                        .BOTTOM, // also possible "TOP" and "CENTER"
+                                    backgroundColor: Colors.red[900],
+                                    textColor: Colors.white,
+                                  );
+                                } else {
+                                  checkItemInCart(model.shortInfo, context);
+                                }
+                              },
+                            )
+                          : IconButton(
+                              icon: Icon(
+                                Icons.delete,
+                                color: Colors.redAccent,
+                              ),
+                              onPressed: () {
+                                removeCartFunction();
+                                Route route = MaterialPageRoute(
+            builder: (c) => ProductPage(itemModel: model, category: category));
+        Navigator.pushReplacement(context, route);
+                              },
+                            ),
+                    ),
+                  
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
 
 Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
   return Container(
