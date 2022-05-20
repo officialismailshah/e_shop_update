@@ -168,6 +168,14 @@ class _AddressCardState extends State<AddressCard> {
 
                           TableRow(
                               children: [
+                                KeyText(msg: "Phone number",),
+                                Text(widget.model.phoneNumber),
+                              
+                              ]
+                          ),
+
+                          TableRow(
+                              children: [
                                 KeyText(msg: "Flat Number",),
                                 Text(widget.model.flatNumber),
                               ]
@@ -182,14 +190,7 @@ class _AddressCardState extends State<AddressCard> {
 
                           TableRow(
                               children: [
-                                KeyText(msg: "State",),
-                                Text(widget.model.name),
-                              ]
-                          ),
-
-                          TableRow(
-                              children: [
-                                KeyText(msg: "Name",),
+                                KeyText(msg: "Country",),
                                 Text(widget.model.state),
                               ]
                           ),

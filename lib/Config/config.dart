@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class EcommerceApp
 {
-   static const String appName = 'onlineShop';
+   static const String appName = 'MH GARMENTS';
 
    static SharedPreferences sharedPreferences;
    static User user;
@@ -29,5 +29,9 @@ class EcommerceApp
    static final String paymentDetails ='paymentDetails';
    static final String orderTime ='orderTime';
    static final String isSuccess ='isSuccess';
+
+  static var feedback;
+
+  static String collectionfeedback;
 
 }

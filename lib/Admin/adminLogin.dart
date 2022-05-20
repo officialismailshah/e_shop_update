@@ -67,7 +67,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
             Container(
               alignment: Alignment.bottomCenter,
               child: Image.asset(
-                "images/admin.png",
+                "assets/images/admin.png",
                 height: 240.0,
                 width: 240.0,
               ),
@@ -75,7 +75,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                "Admin",
+                "Stock Manager",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 28.0,
@@ -144,7 +144,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
                 color: Colors.red,
               )),
               label: Text(
-                "i'm not Admin",
+                "i'm not Stock Manager",
                 style:
                     TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
               ),

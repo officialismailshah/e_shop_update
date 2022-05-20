@@ -297,7 +297,7 @@ class _UploadPageState extends State<UploadPage>
                     border: InputBorder.none,
                   ),
                   // value: value,
-                  items: ['Men', 'Women', 'Child']
+                  items: [ 'Women', 'Child', 'Items']
                       .map<DropdownMenuItem<String>>((e) =>
                           DropdownMenuItem<String>(
                             child: Text(

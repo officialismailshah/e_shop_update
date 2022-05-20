@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final bool isObsecure;
   final bool isName;
+  
 
   CustomTextField(
       {Key key,

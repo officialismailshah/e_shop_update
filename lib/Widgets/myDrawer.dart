@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:e_shop/Authentication/authenication.dart';
 import 'package:e_shop/Config/config.dart';
 import 'package:e_shop/Address/addAddress.dart';
@@ -38,7 +40,7 @@ class MyDrawer extends StatelessWidget {
                     child: CircleAvatar(
                       backgroundImage: EcommerceApp.sharedPreferences
                                   .getString(EcommerceApp.userAvatarUrl) ==
-                              null
+                              null ||  EcommerceApp.auth.currentUser==null 
                           ? Image.asset('assets/images/person.png').image
                           : NetworkImage(
                               EcommerceApp.sharedPreferences
@@ -220,7 +222,7 @@ class MyDrawer extends StatelessWidget {
                   color: Colors.white,
                   thickness: 6.0,
                 ),
-                ListTile(
+                EcommerceApp.auth.currentUser != null ? ListTile(
                     leading: Icon(
                       Icons.exit_to_app,
                       color: Colors.white,
@@ -242,13 +244,23 @@ class MyDrawer extends StatelessWidget {
                           Navigator.pushReplacement(context, route);
                         });
                       }
-                    }),
-                Divider(
+              
+                     } )
+                :SizedBox(),
+
+                EcommerceApp.auth.currentUser !=null ? Divider(
                   height: 10.0,
                   color: Colors.white,
                   thickness: 6.0,
-                ),
-              ],
+                ):SizedBox(),
+                  EcommerceApp.auth.currentUser==null ? RaisedButton(child: Text("SignUp"),color: Colors.white,onPressed: (){
+                    Route route = MaterialPageRoute(
+                              builder: (c) => AuthenticScreen());
+                          Navigator.pushReplacement(context, route);
+
+                }):SizedBox()
+
+              ]
             ),
           ),
         ],

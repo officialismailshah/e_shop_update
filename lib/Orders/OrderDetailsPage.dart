@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/Address/address.dart';
 import 'package:e_shop/Config/config.dart';
+// import 'package:e_shop/Widgets/feedback.dart';
+import 'package:e_shop/Widgets/feedbackscreen.dart';
 // import 'package:e_shop/Store/storehome.dart';
 import 'package:e_shop/Widgets/loadingWidget.dart';
 import 'package:e_shop/Widgets/orderCard.dart';
 import 'package:e_shop/Models/address.dart';
-import 'package:e_shop/main.dart';
+// import 'package:e_shop/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -251,13 +253,13 @@ class ShippingDetails extends StatelessWidget {
                 KeyText(
                   msg: "State",
                 ),
-                Text(model.name),
+                Text(model.state),
               ]),
               TableRow(children: [
                 KeyText(
-                  msg: "Name",
+                  msg: "PhoneNumber",
                 ),
-                Text(model.state),
+                Text(model.phoneNumber),
               ]),
               TableRow(children: [
                 KeyText(
@@ -268,7 +270,38 @@ class ShippingDetails extends StatelessWidget {
             ],
           ),
         ),
-        Padding(
+       
+        //   Padding(
+        //   padding: EdgeInsets.all(10.0),
+        //   child: Center(
+        //     child: InkWell(
+        //       onTap: () {
+        //       showDialog(context: context, builder: (context) => FeedbackDialog());
+        //       },
+        //       child: Container(
+        //         decoration: new BoxDecoration(
+        //           gradient: new LinearGradient(
+        //             colors: [Colors.redAccent, Colors.blueAccent],
+        //             begin: const FractionalOffset(0.0, 0.0),
+        //             end: const FractionalOffset(1.0, 0.0),
+        //             stops: [0.0, 1.0],
+        //             tileMode: TileMode.clamp,
+        //           ),
+        //         ),
+        //         width: MediaQuery.of(context).size.width - 40.0,
+        //         height: 50.0,
+        //         child: Center(
+        //           child: Text(
+        //             "Feedback",
+        //             style: TextStyle(color: Colors.white, fontSize: 15.0),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+
+        // ),
+         Padding(
           padding: EdgeInsets.all(10.0),
           child: Center(
             child: InkWell(
@@ -312,7 +345,7 @@ class ShippingDetails extends StatelessWidget {
 
     getOrderId = "";
 
-    Route route = MaterialPageRoute(builder: (c) => SplashScreen());
+    Route route = MaterialPageRoute(builder: (c) => FeedbackScreen());
     Navigator.pushReplacement(context, route);
 
     Fluttertoast.showToast(msg: "Order has been Received, Confirmed");

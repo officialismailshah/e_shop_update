@@ -30,6 +30,8 @@ class _RegisterState extends State<Register> {
   String userImageUrl = "";
   final ImagePicker imageFile = ImagePicker();
   File imgFile;
+    bool _showPassword = false;
+      
   Image imgForWeb;
 
   @override
@@ -85,17 +87,75 @@ class _RegisterState extends State<Register> {
                     hintText: "Email",
                     isObsecure: false,
                   ),
-                  CustomTextField(
-                    controller: _passwordTextEditingController,
-                    data: Icons.person,
-                    hintText: "Password",
-                    isObsecure: true,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    padding: EdgeInsets.all(8.0),
+                    margin: EdgeInsets.all(10.0),
+                    child: TextFormField(
+                      autofocus: false,
+                      controller: _passwordTextEditingController,
+                      obscureText: !this._showPassword,
+                      cursorColor: Theme.of(context).primaryColor,
+                      textInputAction: TextInputAction.done,
+                     
+                      decoration: InputDecoration(
+                        
+                        border: InputBorder.none,
+                        prefixIcon: Icon(
+                          Icons.vpn_key,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        hintText: "Password",
+                        suffixIcon: IconButton(
+                          onPressed: () => {
+                            setState(
+                                () => this._showPassword = !this._showPassword)
+                          },
+                          icon: Icon(_showPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                      
+                    ),
                   ),
-                  CustomTextField(
-                    controller: _cPasswordTextEditingController,
-                    data: Icons.person,
-                    hintText: "Confirm Password",
-                    isObsecure: true,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    padding: EdgeInsets.all(8.0),
+                    margin: EdgeInsets.all(10.0),
+                    child: TextFormField(
+                      autofocus: false,
+                      controller: _cPasswordTextEditingController,
+                      obscureText: !this._showPassword,
+                      cursorColor: Theme.of(context).primaryColor,
+                      textInputAction: TextInputAction.done,
+                     
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        prefixIcon: Icon(
+                          Icons.vpn_key,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        hintText: "Password",
+                        suffixIcon: IconButton(
+                          onPressed: () => {
+                            setState(
+                                () => this._showPassword = !this._showPassword)
+                          },
+                          icon: Icon(_showPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -151,7 +211,7 @@ class _RegisterState extends State<Register> {
     _passwordTextEditingController.text == _cPasswordTextEditingController.text
         ? _emailTextEditingController.text.isNotEmpty &&
                 _passwordTextEditingController.text.isNotEmpty &&
-                _cPasswordTextEditingController.text.isNotEmpty &&
+                _cPasswordTextEditingController.text.isNotEmpty && 
                 _nameTextEditingController.text.isNotEmpty
             ? uploadToStorage()
             : displayDialog("Please fill up the registration complete form..")

@@ -19,35 +19,37 @@ class OrderCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         Route route;
-        if (counter == 0) {
-          counter = counter + 1;
+        // if (counter == 0) {
+        //   counter = counter + 1;
           route =
               MaterialPageRoute(builder: (c) => OrderDetails(orderID: orderID));
-        }
+        
         Navigator.push(context, route);
       },
-      child: Container(
-        decoration: new BoxDecoration(
-          gradient: new LinearGradient(
-            colors: [Colors.redAccent, Colors.blueAccent],
-            begin: const FractionalOffset(0.0, 0.0),
-            end: const FractionalOffset(1.0, 0.0),
-            stops: [0.0, 1.0],
-            tileMode: TileMode.clamp,
+      
+        child: Container(
+          decoration: new BoxDecoration(
+            gradient: new LinearGradient(
+              colors: [Colors.redAccent, Colors.blueAccent],
+              begin: const FractionalOffset(0.0, 0.0),
+              end: const FractionalOffset(1.0, 0.0),
+              stops: [0.0, 1.0],
+              tileMode: TileMode.clamp,
+            ),
+          ),
+          padding: EdgeInsets.all(10.0),
+          margin: EdgeInsets.all(10.0),
+          height: itemCount * 190.0,
+          child: ListView.builder(
+            itemCount: itemCount,
+            physics: NeverScrollableScrollPhysics(),
+            itemBuilder: (c, index) {
+              ItemModel model = ItemModel.fromJson(data[index].data());
+              return sourceOrderInfo(model, context);
+            },
           ),
         ),
-        padding: EdgeInsets.all(10.0),
-        margin: EdgeInsets.all(10.0),
-        height: itemCount * 190.0,
-        child: ListView.builder(
-          itemCount: itemCount,
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (c, index) {
-            ItemModel model = ItemModel.fromJson(data[index].data());
-            return sourceOrderInfo(model, context);
-          },
-        ),
-      ),
+      
     );
   }
 }

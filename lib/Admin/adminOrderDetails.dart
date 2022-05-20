@@ -242,13 +242,13 @@ class AdminShippingDetails extends StatelessWidget {
                 KeyText(
                   msg: "State",
                 ),
-                Text(model.name),
+                Text(model.state),
               ]),
               TableRow(children: [
                 KeyText(
-                  msg: "Name",
+                  msg: "Phone Number",
                 ),
-                Text(model.state),
+                Text(model.phoneNumber),
               ]),
               TableRow(children: [
                 KeyText(

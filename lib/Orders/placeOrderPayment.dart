@@ -38,7 +38,7 @@ class _PaymentPageState extends State<PaymentPage> {
             children: [
               Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Image.asset("images/cash.png"),
+                child: Image.asset("assets/images/cash.png"),
               ),
               SizedBox(
                 height: 10.0,

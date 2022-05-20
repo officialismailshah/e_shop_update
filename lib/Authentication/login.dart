@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/Admin/adminLogin.dart';
 // import 'package:e_shop/Admin/stockMannagerLogIn.dart';
@@ -20,6 +22,8 @@ class _LoginState extends State<Login> {
       TextEditingController();
   final TextEditingController _passwordTextEditingController =
       TextEditingController();
+      bool _showPassword = false;
+      
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,7 @@ class _LoginState extends State<Login> {
             Container(
               alignment: Alignment.bottomCenter,
               child: Image.asset(
-                "images/login.png",
+                "assets/images/login.png",
                 height: 240.0,
                 width: 240.0,
               ),
@@ -55,16 +59,46 @@ class _LoginState extends State<Login> {
                     hintText: "Email",
                     isObsecure: false,
                   ),
-                  CustomTextField(
-                    controller: _passwordTextEditingController,
-                    data: Icons.person,
-                    hintText: "Password",
-                    isObsecure: true,
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                    ),
+                    padding: EdgeInsets.all(8.0),
+                    margin: EdgeInsets.all(10.0),
+                    child: TextFormField(
+                      autofocus: false,
+                      controller: _passwordTextEditingController,
+                      obscureText: !this._showPassword,
+                      cursorColor: Theme.of(context).primaryColor,
+                      textInputAction: TextInputAction.done,
+                    
+                      decoration: InputDecoration(
+                        
+                        border: InputBorder.none,
+                        prefixIcon: Icon(
+                          Icons.vpn_key,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        hintText: "Password",
+                        suffixIcon: IconButton(
+                          onPressed: () => {
+                            setState(
+                                () => this._showPassword = !this._showPassword)
+                          },
+                          icon: Icon(_showPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          color: Theme.of(context).primaryColor,
+                          
+                      ),
+                      
+                    
+                      ),
+                    ),
                   ),
-                ],
-              ),
-            ),
-            // ignore: deprecated_member_use
+                ])),
+            
             RaisedButton(
               onPressed: () {
                 _emailTextEditingController.text.isNotEmpty &&
@@ -89,7 +123,11 @@ class _LoginState extends State<Login> {
             ),
             ElevatedButton(
               onPressed: () {
-                
+               
+                 if(EcommerceApp.auth.currentUser==null)
+                {
+                    EcommerceApp.auth.signOut();
+                }
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -118,7 +156,7 @@ class _LoginState extends State<Login> {
             ),
             Padding(
               padding: const EdgeInsets.all(0.0),
-              // ignore: deprecated_member_use
+          
               child: FlatButton.icon(
                 onPressed: () => Navigator.push(context,
                     MaterialPageRoute(builder: (context) => AdminSignInPage())),
@@ -127,7 +165,7 @@ class _LoginState extends State<Login> {
                   color: Colors.red,
                 )),
                 label: Text(
-                  "I'm Admin",
+                  "I'm Stock Manager",
                   style:
                       TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
                 ),
@@ -136,7 +174,7 @@ class _LoginState extends State<Login> {
 
             // Padding(
             //   padding: const EdgeInsets.all(0.0),
-            // ignore: deprecated_member_use
+      
             //   child: FlatButton.icon(
             //     onPressed: () => Navigator.push(
             //         context,
