@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/Category/category.dart';
-import 'package:e_shop/Category/women.dart';
+// import 'package:e_shop/Category/women.dart';
 import 'package:e_shop/Store/cart.dart';
 import 'package:e_shop/Store/product_page.dart';
 import 'package:e_shop/Counters/cartitemcounter.dart';
@@ -451,6 +451,7 @@ Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
 void checkItemInCart(String shortInfoAsID, BuildContext context) {
   // print('checking');
   // print(shortInfoAsID);
+
   EcommerceApp.sharedPreferences
           .getStringList(EcommerceApp.userCartList)
           .contains(shortInfoAsID)
@@ -462,10 +463,10 @@ addItemToCart(
   String shortInfoAsID,
   BuildContext context,
 ) {
-  print('adding');
+  // print('adding');
   List tempCartList =
       EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList);
-  print(tempCartList == null ? "null" : tempCartList.toString());
+  // print(tempCartList == null ? "null" : tempCartList.toString());
   tempCartList.add(shortInfoAsID);
 
   EcommerceApp.firestore

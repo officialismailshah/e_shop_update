@@ -43,7 +43,7 @@ class _CartPageState extends State<CartPage> {
             if (EcommerceApp.sharedPreferences
                     .getStringList(EcommerceApp.userCartList)
                     .length ==
-                0) {
+                1) {
               Fluttertoast.showToast(msg: "Your Cart is empty");
             } else {
               Route route = MaterialPageRoute(
@@ -82,9 +82,12 @@ class _CartPageState extends State<CartPage> {
             StreamBuilder<QuerySnapshot>(
               stream: EcommerceApp.firestore
                   .collection("items")
-                  .where("shortInfo",
-                      whereIn: EcommerceApp.sharedPreferences
-                          .getStringList(EcommerceApp.userCartList))
+                  .where(
+                    "shortInfo",
+                    whereIn: EcommerceApp.sharedPreferences.getStringList(
+                      EcommerceApp.userCartList,
+                    ),
+                  )
                   .snapshots(),
               builder: (context, snapshot) {
                 return !snapshot.hasData
@@ -107,8 +110,7 @@ class _CartPageState extends State<CartPage> {
                                 } else {
                                   totalAmount = model.price + totalAmount;
                                 }
-                                if (snapshot.data.docs.length - 1 ==
-                                    index) {
+                                if (snapshot.data.docs.length - 1 == index) {
                                   WidgetsBinding.instance
                                       .addPostFrameCallback((t) {
                                     Provider.of<TotalAmount>(context,
@@ -163,8 +165,7 @@ class _CartPageState extends State<CartPage> {
 
     EcommerceApp.firestore
         .collection(EcommerceApp.collectionUser)
-        .doc(
-            EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
+        .doc(EcommerceApp.sharedPreferences.getString(EcommerceApp.userUID))
         .update({
       EcommerceApp.userCartList: tempCartList,
     }).then((v) {

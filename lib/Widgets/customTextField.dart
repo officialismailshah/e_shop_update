@@ -31,21 +31,49 @@ class CustomTextField extends StatelessWidget {
         onChanged: (value) {
           var integers = RegExp(r"[^0-9]");
           if (isName == true) {
-            print(integers.hasMatch(value));
-            if (integers.hasMatch(value) == false
-                // int.parse(value) == 2 ||
-                // int.parse(value) == 3 ||
-                // int.parse(value) == 4 ||
-                // int.parse(value) == 5 ||
-                // int.parse(value) == 6 ||
-                // int.parse(value) == 7 ||
-                // int.parse(value) == 8 ||
-                // int.parse(value) == 9
-                ) {
+            // print(double.tryParse(value.substring(0)) == null);
+            if (double.tryParse(value.substring(0,1)) != null) {
               controller.text = '';
               controller.text.trim();
               Fluttertoast.showToast(
-                  msg: "Name should start with a letter",
+                  msg: "You Can't start a name with Integer",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
+            // if (integers.hasMatch(value) == false) {
+            //   controller.text = '';
+            //   controller.text.trim();
+            //   Fluttertoast.showToast(
+            //       msg: "You Can't start a name with Integer 223",
+            //       toastLength: Toast.LENGTH_SHORT,
+            //       gravity: ToastGravity.BOTTOM,
+            //       timeInSecForIosWeb: 1,
+            //       backgroundColor: Colors.red,
+            //       textColor: Colors.white,
+            //       fontSize: 16.0);
+            // }
+
+            // print("${value.contains(integers)}" "firstone");
+            // print("${value.contains(integers, value.length)}"
+            //     "wofwofhow??????????hofhwohohwo");
+            if (value.contains(integers, value.length - 1) == false) {
+              // controller.text = '';
+              controller.text.trim();
+              // print(value.length);
+              // value.replaceAll(integers, '');
+              String val = value.substring(0, value.length - 1);
+
+              // print("$val  " 'what is text');
+              controller.text = val;
+              // controller.value = TextEditingValue(text: val);
+              controller.selection = TextSelection.fromPosition(
+                  TextPosition(offset: controller.text.length));
+              Fluttertoast.showToast(
+                  msg: "No number allowed",
                   toastLength: Toast.LENGTH_SHORT,
                   gravity: ToastGravity.BOTTOM,
                   timeInSecForIosWeb: 1,
