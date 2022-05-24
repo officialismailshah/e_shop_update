@@ -252,20 +252,20 @@ class ShippingDetails extends StatelessWidget {
                 KeyText(
                   msg: "State",
                 ),
-                Text(model.name),
-              ]),
-              TableRow(children: [
-                KeyText(
-                  msg: "Name",
-                ),
                 Text(model.state),
               ]),
               TableRow(children: [
                 KeyText(
-                  msg: "Pin Code",
+                  msg: "Phone Number",
                 ),
-                Text(model.pincode),
+                Text(model.phoneNumber),
               ]),
+              // TableRow(children: [
+              //   KeyText(
+              //     msg: "Pin Code",
+              //   ),
+              //   Text(model.pincode),
+              // ]),
             ],
           ),
         ),
