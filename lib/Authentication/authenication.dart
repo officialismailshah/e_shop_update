@@ -27,9 +27,9 @@ class _AuthenticScreenState extends State<AuthenticScreen> {
             ),
           ),
           title: Text(
-            "onlineShop",
+            "MH GARMENTS",
             style: TextStyle(
-                fontSize: 55.0, color: Colors.white, fontFamily: "Signatra"),
+                fontSize: 50.0, color: Colors.white, fontFamily: "Signatra"),
           ),
           centerTitle: true,
           bottom: TabBar(

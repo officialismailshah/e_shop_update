@@ -36,9 +36,9 @@ class MyAppBar extends StatelessWidget with PreferredSizeWidget {
       ),
       centerTitle: true,
       title: Text(
-        "onlineShop",
+        "MH GARMENTS",
         style: TextStyle(
-            fontSize: 55.0, color: Colors.white, fontFamily: "Signatra"),
+            fontSize: 50.0, color: Colors.white, fontFamily: "Signatra"),
       ),
       bottom: bottom,
       actions: [

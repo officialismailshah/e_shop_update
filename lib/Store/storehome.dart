@@ -41,9 +41,9 @@ class _StoreHomeState extends State<StoreHome> {
           ),
         ),
         title: Text(
-          "OnlineShop",
+          "MH GARMENTS",
           style: TextStyle(
-              fontSize: 55.0, color: Colors.white, fontFamily: "Signatra"),
+              fontSize: 50.0, color: Colors.white, fontFamily: "Signatra"),
         ),
         centerTitle: true,
         actions: [
@@ -148,7 +148,7 @@ class _StoreHomeState extends State<StoreHome> {
                       child: Chip(
                         backgroundColor: Colors.blue[600],
                         label: Text(
-                          'Men',
+                          'Child',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

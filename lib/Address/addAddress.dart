@@ -3,6 +3,7 @@ import 'package:e_shop/Store/storehome.dart';
 import 'package:e_shop/Widgets/customAppBar.dart';
 import 'package:e_shop/Models/address.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AddAddress extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
@@ -83,6 +84,8 @@ class AddAddress extends StatelessWidget {
                     MyTextField(
                       hint: "Name",
                       controller: cName,
+                        isName: true,
+                         isObsecure: false,
                     ),
                    Container(
                      padding: EdgeInsets.fromLTRB(6.0, 2.0, 6.0, 0.0),
@@ -109,15 +112,20 @@ class AddAddress extends StatelessWidget {
                     MyTextField(
                       hint: "City",
                       controller: cCity,
+                       isName: true,
+                         isObsecure: false,
+                         
                     ),
                     MyTextField(
                       hint: "State / Country",
+                        isName: true,
+                         isObsecure: false,
                       controller: cState,
                     ),
-                    MyTextField(
-                      hint: "Pin Code",
-                      controller: cPinCode,
-                    ),
+                    // MyTextField(
+                    //   hint: "Pin Code",
+                    //   controller: cPinCode,
+                    // ),
                   ],
                 ),
               ),
@@ -141,11 +149,16 @@ class AddAddress extends StatelessWidget {
 class MyTextField extends StatelessWidget {
   final String hint;
   final TextEditingController controller;
+   final bool isName;
+  final bool isObsecure;
+
 
   MyTextField({
     Key key,
     this.hint,
     this.controller,
+     this.isName = false,
+     this.isObsecure,
   }) : super(key: key);
 
   @override
@@ -157,8 +170,59 @@ class MyTextField extends StatelessWidget {
          decoration: InputDecoration(border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blue,width: 5.0 ),  ),hintText:hint , ),
         validator: (val) {
           return val.isEmpty ? "Field can not be empty" : null;
-        }
+        },
+          keyboardType: isName ? TextInputType.name : TextInputType.text,
+        onChanged: (value) {
+          var integers = RegExp(r"[^0-9]");
+          if (isName == true) {
+            // print(double.tryParse(value.substring(0)) == null);
+            if (double.tryParse(value.substring(0,1)) != null) {
+              controller.text = '';
+              controller.text.trim();
+              Fluttertoast.showToast(
+                  msg: "You Can't start a name with Integer",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
+             if (value.contains(integers, value.length - 1) == false) {
+              // controller.text = '';
+              controller.text.trim();
+              // print(value.length);
+              // value.replaceAll(integers, '');
+              String val = value.substring(0, value.length - 1);
+
+              // print("$val  " 'what is text');
+              controller.text = val;
+              // controller.value = TextEditingValue(text: val);
+              controller.selection = TextSelection.fromPosition(
+                  TextPosition(offset: controller.text.length));
+              Fluttertoast.showToast(
+                  msg: "No number allowed",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+            }
+          }
+        },
+//        
+        
+        
+        
+
       ),
+      
+      
+      
+      
+        
     );
   }
+  
 }
