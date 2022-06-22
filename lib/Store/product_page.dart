@@ -25,7 +25,7 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
-         const availableQuantity = 5;
+    const availableQuantity = 5;
     // Size screenSize = MediaQuery.of(context).size;
     return SafeArea(
       child: WillPopScope(
@@ -83,24 +83,24 @@ class _ProductPageState extends State<ProductPage> {
                               "Rs " + widget.itemModel.price.toString(),
                               style: boldTextStyle,
                             ),
-                              Row(
-                               mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Quantity:'),
-            ItemQuantitySelector(
-              // TODO: plug in state
-              quantity: 1,
-              // let the user choose up to the available quantity or
-              // 10 items at most
-              maxQuantity: min(availableQuantity, 5),
-              // TODO: Implement onChanged
-              onChanged: (value) {
-                showNotImplementedAlertDialog(context: context);
-              },
-            ),
-          ],
-        ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text('Quantity:'),
+                                ItemQuantitySelector(
+                                  quantity: 1,
+                                  // let the user choose up to the available quantity or
+                                  // 10 items at most
+                                  maxQuantity: min(availableQuantity, 5),
+
+                                  onChanged: (value) {
+                                    showNotImplementedAlertDialog(
+                                        context: context);
+                                  },
+                                ),
+                              ],
+                            ),
                             SizedBox(
                               height: 10.0,
                             ),
@@ -123,8 +123,10 @@ class _ProductPageState extends State<ProductPage> {
                                 textColor: Colors.white,
                               );
                             } else {
-                              checkItemInCart(widget.itemModel.shortInfo,
-                                  context, );
+                              checkItemInCart(
+                                widget.itemModel.shortInfo,
+                                context,
+                              );
                             }
                           },
                           child: Container(

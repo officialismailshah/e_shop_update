@@ -5,17 +5,39 @@ import 'package:e_shop/Models/address.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class AddAddress extends StatelessWidget {
+class AddAddress extends StatefulWidget {
+  @override
+  State<AddAddress> createState() => _AddAddressState();
+}
+
+class _AddAddressState extends State<AddAddress> {
   final formKey = GlobalKey<FormState>();
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
   final cName = TextEditingController();
+
   final cPhoneNumber = TextEditingController();
+
   final cFlatHomeNumber = TextEditingController();
+
   final cCity = TextEditingController();
+
   final cState = TextEditingController();
+
   final cPinCode = TextEditingController();
 
-   String _phone;
+  String phone = '';
+  @override
+  void dispose() {
+    cName.dispose();
+    cPhoneNumber.dispose();
+    cFlatHomeNumber.dispose();
+    cCity.dispose();
+    cState.dispose();
+    cPinCode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,27 +106,27 @@ class AddAddress extends StatelessWidget {
                     MyTextField(
                       hint: "Name",
                       controller: cName,
-                        isName: true,
-                         isObsecure: false,
+                      isName: true,
+                      isObsecure: false,
                     ),
-                   Container(
-                     padding: EdgeInsets.fromLTRB(6.0, 2.0, 6.0, 0.0),
-                     child: TextFormField(
-                        
-                   controller: cPhoneNumber,
-                   
-                   decoration: InputDecoration(labelText: 'Enter Number' , border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blue,width: 5.0 ),),),
-                   
-                     keyboardType: TextInputType.phone,
-                     
-                      validator: validatePhone,
-                             onSaved: (String val) {
-                               _phone = val;
-                             },
-                           
-                   
-                     ),
-                   ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(6.0, 2.0, 6.0, 0.0),
+                      child: TextFormField(
+                        controller: cPhoneNumber,
+                        decoration: InputDecoration(
+                          labelText: 'Enter Number',
+                          border: OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.blue, width: 5.0),
+                          ),
+                        ),
+                        keyboardType: TextInputType.phone,
+                        validator: validatePhone,
+                        onSaved: (String val) {
+                          phone = val;
+                        },
+                      ),
+                    ),
                     MyTextField(
                       hint: "Flat Number / House Number",
                       controller: cFlatHomeNumber,
@@ -112,14 +134,13 @@ class AddAddress extends StatelessWidget {
                     MyTextField(
                       hint: "City",
                       controller: cCity,
-                       isName: true,
-                         isObsecure: false,
-                         
+                      isName: true,
+                      isObsecure: false,
                     ),
                     MyTextField(
                       hint: "State / Country",
-                        isName: true,
-                         isObsecure: false,
+                      isName: true,
+                      isObsecure: false,
                       controller: cState,
                     ),
                     // MyTextField(
@@ -135,8 +156,8 @@ class AddAddress extends StatelessWidget {
       ),
     );
   }
-    String validatePhone(String value) {
 
+  String validatePhone(String value) {
     if (value.length != 11)
       return 'Mobile Number must be of 11 digit';
     else
@@ -144,21 +165,18 @@ class AddAddress extends StatelessWidget {
   }
 }
 
-
-
 class MyTextField extends StatelessWidget {
   final String hint;
   final TextEditingController controller;
-   final bool isName;
+  final bool isName;
   final bool isObsecure;
-
 
   MyTextField({
     Key key,
     this.hint,
     this.controller,
-     this.isName = false,
-     this.isObsecure,
+    this.isName = false,
+    this.isObsecure,
   }) : super(key: key);
 
   @override
@@ -167,16 +185,21 @@ class MyTextField extends StatelessWidget {
       padding: EdgeInsets.all(8.0),
       child: TextFormField(
         controller: controller,
-         decoration: InputDecoration(border: OutlineInputBorder(borderSide: BorderSide(color: Colors.blue,width: 5.0 ),  ),hintText:hint , ),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.blue, width: 5.0),
+          ),
+          hintText: hint,
+        ),
         validator: (val) {
           return val.isEmpty ? "Field can not be empty" : null;
         },
-          keyboardType: isName ? TextInputType.name : TextInputType.text,
+        keyboardType: isName ? TextInputType.name : TextInputType.text,
         onChanged: (value) {
           var integers = RegExp(r"[^0-9]");
           if (isName == true) {
             // print(double.tryParse(value.substring(0)) == null);
-            if (double.tryParse(value.substring(0,1)) != null) {
+            if (double.tryParse(value.substring(0, 1)) != null) {
               controller.text = '';
               controller.text.trim();
               Fluttertoast.showToast(
@@ -188,7 +211,7 @@ class MyTextField extends StatelessWidget {
                   textColor: Colors.white,
                   fontSize: 16.0);
             }
-             if (value.contains(integers, value.length - 1) == false) {
+            if (value.contains(integers, value.length - 1) == false) {
               // controller.text = '';
               controller.text.trim();
               // print(value.length);
@@ -211,18 +234,8 @@ class MyTextField extends StatelessWidget {
             }
           }
         },
-//        
-        
-        
-        
-
+//
       ),
-      
-      
-      
-      
-        
     );
   }
-  
 }
