@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_shop/Admin/uploadItems.dart';
+import 'package:e_shop/StockManager/uploadItems.dart';
 import 'package:e_shop/Authentication/authenication.dart';
 import 'package:e_shop/Widgets/customTextField.dart';
 import 'package:e_shop/DialogBox/errorDialog.dart';
@@ -22,7 +22,7 @@ class AdminSignInPage extends StatelessWidget {
           ),
         ),
         title: Text(
-          "onlineShop",
+          "MH GARMENTS",
           style: TextStyle(
               fontSize: 55.0, color: Colors.white, fontFamily: "Signatra"),
         ),

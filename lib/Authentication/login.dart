@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_shop/Admin/adminLogin.dart';
+import 'package:e_shop/StockManager/stockLogin.dart';
 // import 'package:e_shop/Admin/stockMannagerLogIn.dart';
 import 'package:e_shop/Widgets/customTextField.dart';
 import 'package:e_shop/DialogBox/errorDialog.dart';

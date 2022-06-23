@@ -16,7 +16,7 @@ class WideButton extends StatelessWidget {
           onTap: onPressed,
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.red,
+              color: Colors.black,
             ),
             width: MediaQuery.of(context).size.width*0.85,
             height: 50.0,
