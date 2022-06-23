@@ -1,4 +1,4 @@
-import 'dart:math';
+// import 'dart:math';
 
 import 'package:e_shop/Config/config.dart';
 import 'package:e_shop/Widgets/customAppBar.dart';
@@ -24,7 +24,7 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
-         const availableQuantity = 5;
+     
     // Size screenSize = MediaQuery.of(context).size;
     return SafeArea(
       child: WillPopScope(
