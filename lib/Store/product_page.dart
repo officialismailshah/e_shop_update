@@ -1,4 +1,4 @@
-import 'dart:math';
+// import 'dart:math';
 
 import 'package:e_shop/Config/config.dart';
 import 'package:e_shop/Widgets/customAppBar.dart';
@@ -8,8 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:e_shop/Store/storehome.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../Widgets/dialog.dart';
-import '../Widgets/itemquantity_selector.dart';
+
 
 class ProductPage extends StatefulWidget {
   final ItemModel itemModel;
@@ -25,7 +24,7 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
-         const availableQuantity = 5;
+     
     // Size screenSize = MediaQuery.of(context).size;
     return SafeArea(
       child: WillPopScope(
@@ -83,24 +82,7 @@ class _ProductPageState extends State<ProductPage> {
                               "Rs " + widget.itemModel.price.toString(),
                               style: boldTextStyle,
                             ),
-                              Row(
-                               mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('Quantity:'),
-            ItemQuantitySelector(
-              // TODO: plug in state
-              quantity: 1,
-              // let the user choose up to the available quantity or
-              // 10 items at most
-              maxQuantity: min(availableQuantity, 5),
-              // TODO: Implement onChanged
-              onChanged: (value) {
-                showNotImplementedAlertDialog(context: context);
-              },
-            ),
-          ],
-        ),
+                            
                             SizedBox(
                               height: 10.0,
                             ),

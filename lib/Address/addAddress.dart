@@ -13,7 +13,7 @@ class AddAddress extends StatelessWidget {
   final cFlatHomeNumber = TextEditingController();
   final cCity = TextEditingController();
   final cState = TextEditingController();
-  final cPinCode = TextEditingController();
+  // final cPinCode = TextEditingController();
 
    String _phone;
 
@@ -29,7 +29,7 @@ class AddAddress extends StatelessWidget {
               final model = AddressModel(
                 name: cName.text.trim(),
                 state: cState.text.trim(),
-                pincode: cPinCode.text,
+                // pincode: cPinCode.text,
                 phoneNumber: cPhoneNumber.text,
                 flatNumber: cFlatHomeNumber.text,
                 city: cCity.text.trim(),
@@ -122,10 +122,10 @@ class AddAddress extends StatelessWidget {
                          isObsecure: false,
                       controller: cState,
                     ),
-                    // MyTextField(
-                    //   hint: "Pin Code",
-                    //   controller: cPinCode,
-                    // ),
+                    MyTextField(
+                      hint: "Pin Code",
+                      // controller: cPinCode,
+                    ),
                   ],
                 ),
               ),
