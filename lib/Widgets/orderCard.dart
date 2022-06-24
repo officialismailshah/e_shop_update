@@ -67,13 +67,6 @@ class SourceOrderInfo extends StatelessWidget {
     return InkWell(
       onTap: () {
         Route route;
-<<<<<<< HEAD
-        // if (counter == 0) {
-        //   counter = counter + 1;
-          route =
-              MaterialPageRoute(builder: (c) => OrderDetails(orderID: orderID));
-        // }
-=======
         if (counter == 0) {
           counter = counter + 1;
           route = MaterialPageRoute(
@@ -82,7 +75,6 @@ class SourceOrderInfo extends StatelessWidget {
                     uniqueShortInfo: model.shortInfo,
                   ));
         }
->>>>>>> xerrox
         Navigator.push(context, route);
       },
       child: Container(

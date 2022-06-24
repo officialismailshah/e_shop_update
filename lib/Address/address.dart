@@ -183,23 +183,23 @@ class _AddressCardState extends State<AddressCard> {
                           TableRow(
                               children: [
                                 KeyText(msg: "State",),
-                                Text(widget.model.name),
-                              ]
-                          ),
-
-                          TableRow(
-                              children: [
-                                KeyText(msg: "Name",),
                                 Text(widget.model.state),
                               ]
                           ),
 
                           TableRow(
                               children: [
-                                KeyText(msg: "Pin Code",),
-                                Text(widget.model.pincode),
+                                KeyText(msg: "PhoneNumber",),
+                                Text(widget.model.phoneNumber),
                               ]
                           ),
+
+                          // TableRow(
+                          //     children: [
+                          //       KeyText(msg: "Pin Code",),
+                          //       Text(widget.model.pincode),
+                          //     ]
+                          // ),
                         ],
                       ),
                     ),
