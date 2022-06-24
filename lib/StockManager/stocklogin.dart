@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:e_shop/StockManager/uploadItems.dart';
+import 'package:e_shop/StockManager/uploadItems.dart';
 import 'package:e_shop/Authentication/authenication.dart';
 import 'package:e_shop/Widgets/customTextField.dart';
 import 'package:e_shop/DialogBox/errorDialog.dart';
 import 'package:flutter/material.dart';
-
-import '../Admin/uploadItems.dart';
 
 class AdminSignInPage extends StatelessWidget {
   @override
@@ -77,7 +75,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
             Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                "Admin",
+                "Stock Manager",
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 28.0,
@@ -146,7 +144,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
                 color: Colors.red,
               )),
               label: Text(
-                "i'm not Admin",
+                "i'm  Admin",
                 style:
                     TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
               ),

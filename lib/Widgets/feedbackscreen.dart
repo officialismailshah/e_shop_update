@@ -105,6 +105,7 @@ class FeedbackScreenstate extends State<FeedbackScreen> {
 
                           try {
                             // Get a reference to the `feedback` collection
+                            print(widget.uniqueShortInfo);
 
                             FirebaseFirestore.instance
                                 .collection('feedback')

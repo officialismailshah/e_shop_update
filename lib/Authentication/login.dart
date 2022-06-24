@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_shop/Admin/adminLogin.dart';
-// import 'package:e_shop/Admin/stockMannagerLogIn.dart';
+import 'package:e_shop/StockManager/StockLogin.dart';
 import 'package:e_shop/Widgets/customTextField.dart';
 import 'package:e_shop/DialogBox/errorDialog.dart';
 import 'package:e_shop/DialogBox/loadingDialog.dart';
@@ -165,7 +164,7 @@ class _LoginState extends State<Login> {
                   color: Colors.red,
                 )),
                 label: Text(
-                  "I'm Admin",
+                  "I'm StockManager",
                   style:
                       TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
                 ),
