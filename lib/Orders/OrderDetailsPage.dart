@@ -326,18 +326,17 @@ class ShippingDetails extends StatelessWidget {
         .delete()
         .then((value) {
       Fluttertoast.showToast(msg: "Order has been Received, Confirmed");
-      FirebaseFirestore.instance.collection('feedback').add({
-        'feedback': 'feeling good',
-        'shortInfo': uniqueShortInfo,
-        'orderId': mOrderId,
-        'email':
-            EcommerceApp.sharedPreferences.getString(EcommerceApp.userEmail),
-      });
     });
 
     getOrderId = "";
 
-    Route route = MaterialPageRoute(builder: (c) => FeedbackScreen());
+    Route route = MaterialPageRoute(
+        builder: (c) => FeedbackScreen(
+              email: EcommerceApp.sharedPreferences
+                  .getString(EcommerceApp.userEmail),
+              orderId: mOrderId,
+              uniqueShortInfo: uniqueShortInfo,
+            ));
     Navigator.pushReplacement(context, route);
   }
 }
