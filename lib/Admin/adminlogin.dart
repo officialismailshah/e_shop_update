@@ -162,7 +162,7 @@ class _AdminIdScreenState extends State<AdminIdScreen> {
   }
 
   loginAdminId() {
-    FirebaseFirestore.instance.collection("Admin").get().then((snapshot) {
+    FirebaseFirestore.instance.collection("admins").get().then((snapshot) {
       snapshot.docs.forEach((result) {
         if (result["id"] != _adminIDTextEditingController.text.trim()) {
           // ignore: deprecated_member_use
