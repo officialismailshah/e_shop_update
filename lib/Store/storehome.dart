@@ -622,14 +622,26 @@ Widget designUpdate(ItemModel model, BuildContext context,
                                 color: Colors.redAccent,
                               ),
                               onPressed: () {
-                                // EcommerceApp.firestore.collection("Items").where(
-                                //     "shortInfo",
-                                //     isEqualTo: "".
+
+                               var query = EcommerceApp.firestore.collection("Items").where(
+
+                                    "shortInfo",isGreaterThanOrEqualTo :model.shortInfo
+                                )
                                      
-                                //         .delete()
-                                //         .then(() => print("Deleted"))
-                                //         .catchError((error) => print(
-                                //             "Failed to delete user: $error")));
+                                        .get();
+                                        query.then((value) {
+                                          print("Deleted");
+                                         value.docs.forEach((doc) {
+    print(doc.reference);
+    doc.reference.delete().then((value) {
+print("***");
+      // return null;
+
+    });
+  });
+                                        })
+                                        .catchError((error) => print(
+                                            "Failed to delete user: $error"));
                               },
                             )
                           : removeCartFunction == null

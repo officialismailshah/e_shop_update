@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_shop/Admin/adminlogin.dart';
 import 'package:e_shop/StockManager/uploadItems.dart';
-import 'package:e_shop/Authentication/authenication.dart';
+// import 'package:e_shop/Authentication/authenication.dart';
 import 'package:e_shop/Widgets/customTextField.dart';
 import 'package:e_shop/DialogBox/errorDialog.dart';
 import 'package:flutter/material.dart';
@@ -138,7 +139,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
             // ignore: deprecated_member_use
             FlatButton.icon(
               onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AuthenticScreen())),
+                  MaterialPageRoute(builder: (context) => Adminid())),
               icon: (Icon(
                 Icons.nature_people,
                 color: Colors.red,
@@ -159,7 +160,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
   }
 
   loginAdmin() {
-    FirebaseFirestore.instance.collection("admins").get().then((snapshot) {
+    FirebaseFirestore.instance.collection("stockmanager").get().then((snapshot) {
       snapshot.docs.forEach((result) {
         if (result["id"] != _adminIDTextEditingController.text.trim()) {
           // ignore: deprecated_member_use
@@ -176,7 +177,7 @@ class _AdminSignInScreenState extends State<AdminSignInScreen> {
           // ignore: deprecated_member_use
           Scaffold.of(context).showSnackBar(
             SnackBar(
-              content: Text("Welcome dear Admin." + result["name"]),
+              content: Text("Welcome dear Stock." + result["name"]),
             ),
           );
 

@@ -55,11 +55,15 @@ class SearchBoxDelegate extends SliverPersistentHeaderDelegate {
       );
 
   @override
-  double get maxExtent => 80;
+  double get maxExtent {
+    return 80;
+  }
 
   @override
   double get minExtent => 80;
 
   @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
+  }
 }
