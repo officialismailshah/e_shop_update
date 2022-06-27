@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:e_shop/Category/category.dart';
 // import 'package:e_shop/Category/women.dart';
 import 'package:e_shop/Store/cart.dart';
@@ -18,6 +19,14 @@ import '../Models/item.dart';
 double width;
 
 class StoreHome extends StatefulWidget {
+  final bool isStockManager;
+  // final String uniqueShortInfo;
+  const StoreHome({
+    Key key,
+    // @required this.uniqueShortInfo,
+    this.isStockManager,
+
+  }) : super(key: key);
   @override
   _StoreHomeState createState() => _StoreHomeState();
 }
@@ -88,11 +97,12 @@ class _StoreHomeState extends State<StoreHome> {
                           // print(
                           //     """${EcommerceApp.sharedPreferences.getStringList(EcommerceApp.userCartList).length}""");
                           return counter.count == null &&
-                                  EcommerceApp.sharedPreferences
-                                          .getStringList(
-                                              EcommerceApp.userCartList)
-                                          .length ==
-                                      1 || EcommerceApp.auth.currentUser == null
+                                      EcommerceApp.sharedPreferences
+                                              .getStringList(
+                                                  EcommerceApp.userCartList)
+                                            .length ==
+                                          1 ||
+                                  EcommerceApp.auth.currentUser == null
                               ? Text(
                                   '0',
                                   style: TextStyle(
@@ -141,8 +151,8 @@ class _StoreHomeState extends State<StoreHome> {
                     InkWell(
                       onTap: () {
                         Route route = MaterialPageRoute(
-                            builder: ((context) =>
-                                GeneralCatgory(title: 'Child', category: 'child')));
+                            builder: ((context) => GeneralCatgory(
+                                title: 'Child', category: 'child')));
                         Navigator.of(context).push(route);
                       },
                       child: Chip(
@@ -200,7 +210,8 @@ class _StoreHomeState extends State<StoreHome> {
                           ItemModel model = ItemModel.fromJson(
                             dataSnapshot.data.docs[index].data(),
                           );
-                          return designUpdate(model, context);
+                          return designUpdate(model, context,
+                              isStockManager: false);
                         },
                         itemCount: dataSnapshot.data.docs.length,
                       ),
@@ -423,9 +434,12 @@ Widget sourceInfo(ItemModel model, BuildContext context,
     ),
   );
 }
-Widget designUpdate(ItemModel model, BuildContext context,
 
-    {Color background, removeCartFunction, String category}) {
+Widget designUpdate(ItemModel model, BuildContext context,
+    {Color background,
+    removeCartFunction,
+    String category,
+    bool isStockManager}) {
   return InkWell(
     onTap: () {
       Route route = MaterialPageRoute(
@@ -436,25 +450,20 @@ Widget designUpdate(ItemModel model, BuildContext context,
     child: Padding(
       padding: EdgeInsets.all(6.0),
       child: Card(
-      color: Colors.white,
-      shape: RoundedRectangleBorder(  
-        
-            borderRadius: BorderRadius.circular(15.0),  
-          
-          ),  
-          
-      elevation: 10.0,
-      
-      shadowColor: Colors.pink,
+        color: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        elevation: 10.0,
+        shadowColor: Colors.pink,
         child: Container(
-        //   decoration: BoxDecoration(
-          
-        //   border: Border.all(
-        // color: Colors.blue,
-        //   ),
-        //   borderRadius: BorderRadius.circular(12.0,),
-          
-        
+          //   decoration: BoxDecoration(
+
+          //   border: Border.all(
+          // color: Colors.blue,
+          //   ),
+          //   borderRadius: BorderRadius.circular(12.0,),
+
           height: 190.0,
           width: width,
           child: Row(
@@ -481,8 +490,8 @@ Widget designUpdate(ItemModel model, BuildContext context,
                           Expanded(
                             child: Text(
                               model.title,
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 14.0),
+                              style: TextStyle(
+                                  color: Colors.black, fontSize: 14.0),
                             ),
                           ),
                         ],
@@ -543,7 +552,7 @@ Widget designUpdate(ItemModel model, BuildContext context,
                         SizedBox(
                           width: 10.0,
                         ),
-         Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
@@ -602,45 +611,75 @@ Widget designUpdate(ItemModel model, BuildContext context,
                     Flexible(
                       child: Container(),
                     ),
-      
+
                     // to implement cart item add/remove feature
                     Align(
                       alignment: Alignment.centerRight,
-                      child: removeCartFunction == null
+                      child: isStockManager
                           ? IconButton(
-                              icon: Icon(
-                                Icons.add_shopping_cart,
-                                color: Colors.redAccent,
-                              ),
-                              onPressed: () {
-                                if (EcommerceApp.auth.currentUser == null) {
-                                  Fluttertoast.showToast(
-                                    msg: 'Please Login First',
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity
-                                        .BOTTOM, // also possible "TOP" and "CENTER"
-                                    backgroundColor: Colors.red[900],
-                                    textColor: Colors.white,
-                                  );
-                                } else {
-                                  checkItemInCart(model.shortInfo, context);
-                                }
-                              },
-                            )
-                          : IconButton(
                               icon: Icon(
                                 Icons.delete,
                                 color: Colors.redAccent,
                               ),
                               onPressed: () {
-                                removeCartFunction();
-                                Route route = MaterialPageRoute(
-            builder: (c) => ProductPage(itemModel: model, category: category));
-        Navigator.pushReplacement(context, route);
+
+                               var query = EcommerceApp.firestore.collection("Items").where(
+
+                                    "shortInfo",isGreaterThanOrEqualTo :model.shortInfo
+                                )
+                                     
+                                        .get();
+                                        query.then((value) {
+                                          print("Deleted");
+                                         value.docs.forEach((doc) {
+    print(doc.reference);
+    doc.reference.delete().then((value) {
+print("***");
+      // return null;
+
+    });
+  });
+                                        })
+                                        .catchError((error) => print(
+                                            "Failed to delete user: $error"));
                               },
-                            ),
+                            )
+                          : removeCartFunction == null
+                              ? IconButton(
+                                  icon: Icon(
+                                    Icons.add_shopping_cart,
+                                    color: Colors.redAccent,
+                                  ),
+                                  onPressed: () {
+                                    if (EcommerceApp.auth.currentUser == null) {
+                                      Fluttertoast.showToast(
+                                        msg: 'Please Login First',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity
+                                            .BOTTOM, // also possible "TOP" and "CENTER"
+                                        backgroundColor: Colors.red[900],
+                                        textColor: Colors.white,
+                                      );
+                                    } else {
+                                      checkItemInCart(model.shortInfo, context);
+                                    }
+                                  },
+                                )
+                              : IconButton(
+                                  icon: Icon(
+                                    Icons.delete,
+                                    color: Colors.redAccent,
+                                  ),
+                                  onPressed: () {
+                                    removeCartFunction();
+                                    Route route = MaterialPageRoute(
+                                        builder: (c) => ProductPage(
+                                            itemModel: model,
+                                            category: category));
+                                    Navigator.pushReplacement(context, route);
+                                  },
+                                ),
                     ),
-                  
                   ],
                 ),
               ),
@@ -651,7 +690,6 @@ Widget designUpdate(ItemModel model, BuildContext context,
     ),
   );
 }
-
 
 Widget card({Color primaryColor = Colors.redAccent, String imgPath}) {
   return Container(

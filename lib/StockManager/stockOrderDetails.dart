@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_shop/Address/address.dart';
-import 'package:e_shop/Admin/uploadItems.dart';
+import 'package:e_shop/StockManager/uploadItems.dart';
 import 'package:e_shop/Config/config.dart';
 import 'package:e_shop/Widgets/loadingWidget.dart';
 import 'package:e_shop/Widgets/orderCard.dart';
@@ -242,20 +242,20 @@ class AdminShippingDetails extends StatelessWidget {
                 KeyText(
                   msg: "State",
                 ),
-                Text(model.name),
-              ]),
-              TableRow(children: [
-                KeyText(
-                  msg: "Name",
-                ),
                 Text(model.state),
               ]),
               TableRow(children: [
                 KeyText(
-                  msg: "Pin Code",
+                  msg: "PhoneNumber",
                 ),
-                Text(model.pincode),
+                Text(model.phoneNumber),
               ]),
+              // TableRow(children: [
+              //   KeyText(
+              //     msg: "Pin Code",
+              //   ),
+              //   Text(model.pincode),
+              // ]),
             ],
           ),
         ),

@@ -1,11 +1,15 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:e_shop/Admin/adminShiftOrders.dart';
+// import 'package:e_shop/StockManager/addItem.dart';
+// import 'package:e_shop/StockManager/stockShiftOrders.dart';
+import 'package:e_shop/StockManager/editItem.dart';
 import 'package:e_shop/Widgets/loadingWidget.dart';
 import 'package:e_shop/main.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
+import 'editItem.dart';
 
 class UploadPage extends StatefulWidget {
   @override
@@ -59,8 +63,10 @@ class _UploadPageState extends State<UploadPage>
   }
 
   displayAdminHomeScreen() {
-    return WillPopScope(
-      onWillPop: backToHome,
+    
+        return DefaultTabController(
+          length: 2,
+    
       child: Scaffold(
         appBar: AppBar(
           flexibleSpace: Container(
@@ -74,37 +80,54 @@ class _UploadPageState extends State<UploadPage>
               ),
             ),
           ),
-          leading: IconButton(
-            icon: Icon(
-              Icons.add_shopping_cart,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Route route =
-                  MaterialPageRoute(builder: (c) => AdminShiftOrders());
-              Navigator.pushReplacement(context, route);
-            },
+           title: Text(
+            "Stock Manager",
+            style: TextStyle(
+                fontSize: 55.0, color: Colors.white, fontFamily: "Signatra"),
           ),
-          actions: [
-            ElevatedButton(
-              child: Text(
-                "Logout",
-                style: TextStyle(
+          centerTitle: true,
+           bottom: TabBar(
+            tabs: [
+              Tab(
+                icon: Icon(
+                  Icons.add_a_photo,
                   color: Colors.white,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
                 ),
+                text: "Add Item",
               ),
-              onPressed: () {
-                Route route = MaterialPageRoute(builder: (c) => SplashScreen());
-                Navigator.pushReplacement(context, route);
-              },
-            ),
-          ],
+              Tab(
+                icon: Icon(
+                  Icons.mode_edit_outline,
+                  color: Colors.white,
+                ),
+                text: "Edit Item",
+              ),
+            ],
+          indicatorColor: Colors.white38,
+            indicatorWeight: 5.0,
+          ),
         ),
-        body: getAdminHomeScreenBody(),
+        body: Container(
+           decoration: BoxDecoration(
+            gradient: new LinearGradient(
+              colors: [Colors.redAccent, Colors.blueAccent],
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+            ),
+          ),
+        child: TabBarView(
+            children: [
+              getAdminHomeScreenBody(),
+              EditItem(),
+            ],
+          
+        ),
+        ),
       ),
-    );
+        );
+    
+    
+             
   }
 
   getAdminHomeScreenBody() {
@@ -297,7 +320,7 @@ class _UploadPageState extends State<UploadPage>
                     border: InputBorder.none,
                   ),
                   // value: value,
-                  items: ['Item', 'Women', 'Child']
+                  items: ['Women', 'Child']
                       .map<DropdownMenuItem<String>>((e) =>
                           DropdownMenuItem<String>(
                             child: Text(

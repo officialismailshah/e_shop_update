@@ -70,7 +70,7 @@ class SourceOrderInfo extends StatelessWidget {
         // if (counter == 0) {
         //   counter = counter + 1;
           route =
-              MaterialPageRoute(builder: (c) => OrderDetails(orderID: orderID));
+              MaterialPageRoute(builder: (c) => OrderDetails(uniqueShortInfo: model.shortInfo,orderID: orderID));
         // }
         Navigator.push(context, route);
       },
