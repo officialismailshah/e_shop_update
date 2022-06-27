@@ -35,7 +35,7 @@ class FeedbackScreenstate extends State<FeedbackScreen> {
     super.dispose();
   }
 
-  String userfeedback;
+  // String userfeedback;
 
   @override
   Widget build(BuildContext context) {
