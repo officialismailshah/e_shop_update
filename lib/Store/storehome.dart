@@ -621,17 +621,23 @@ Widget designUpdate(ItemModel model, BuildContext context,
                                 color: Colors.redAccent,
                               ),
                               onPressed: () {
+                                print('object');
                                 var query = EcommerceApp.firestore
-                                    .collection("Items")
+                                    .collection("items")
                                     .get();
                                 query.then((value) {
                                   value.docs.map((e) {
                                     if (e.data()["shortInfo"] ==
                                         model.shortInfo) {
+                                      print('deleted');
                                       EcommerceApp.firestore
-                                          .collection("Items")
+                                          .collection("items")
                                           .doc(e.id)
-                                          .delete();
+                                          .delete()
+                                          .then((value) {
+                                        Fluttertoast.showToast(
+                                            msg: "Product Deleted");
+                                      });
                                     }
                                   }).toList();
 
