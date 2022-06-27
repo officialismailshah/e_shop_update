@@ -70,11 +70,7 @@ class SourceOrderInfo extends StatelessWidget {
         // if (counter == 0) {
         //   counter = counter + 1;
           route =
-<<<<<<< Updated upstream
               MaterialPageRoute(builder: (c) => OrderDetails(uniqueShortInfo: model.shortInfo,orderID: orderID));
-=======
-              MaterialPageRoute(builder: (c) => OrderDetails(orderID: orderID, uniqueShortInfo: model.shortInfo,));
->>>>>>> Stashed changes
         // }
         Navigator.push(context, route);
       },

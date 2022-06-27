@@ -25,7 +25,6 @@ class StoreHome extends StatefulWidget {
     Key key,
     // @required this.uniqueShortInfo,
     this.isStockManager,
-
   }) : super(key: key);
   @override
   _StoreHomeState createState() => _StoreHomeState();
@@ -100,7 +99,7 @@ class _StoreHomeState extends State<StoreHome> {
                                       EcommerceApp.sharedPreferences
                                               .getStringList(
                                                   EcommerceApp.userCartList)
-                                            .length ==
+                                              .length ==
                                           1 ||
                                   EcommerceApp.auth.currentUser == null
                               ? Text(
@@ -622,26 +621,30 @@ Widget designUpdate(ItemModel model, BuildContext context,
                                 color: Colors.redAccent,
                               ),
                               onPressed: () {
+                                var query = EcommerceApp.firestore
+                                    .collection("Items")
+                                    .get();
+                                query.then((value) {
+                                  value.docs.map((e) {
+                                    if (e.data()["shortInfo"] ==
+                                        model.shortInfo) {
+                                      EcommerceApp.firestore
+                                          .collection("Items")
+                                          .doc(e.id)
+                                          .delete();
+                                    }
+                                  }).toList();
 
-                               var query = EcommerceApp.firestore.collection("Items").where(
+// .forEach((doc) {
+//     print(doc.reference);
+//     doc.reference.delete().then((value) {
+// print("***");
+//       // return null;
 
-                                    "shortInfo",isGreaterThanOrEqualTo :model.shortInfo
-                                )
-                                     
-                                        .get();
-                                        query.then((value) {
-                                          print("Deleted");
-                                         value.docs.forEach((doc) {
-    print(doc.reference);
-    doc.reference.delete().then((value) {
-print("***");
-      // return null;
-
-    });
-  });
-                                        })
-                                        .catchError((error) => print(
-                                            "Failed to delete user: $error"));
+//     });
+//   });
+                                }).catchError((error) =>
+                                    print("Failed to delete user: $error"));
                               },
                             )
                           : removeCartFunction == null
